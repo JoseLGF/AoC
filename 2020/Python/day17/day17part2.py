@@ -215,7 +215,7 @@ def puzzleSolution1(lines):
     # count active cubes after 6 iterations
     log(INFO, "Active neighbors at the end")
     finalActiveNeighbors = Cube.getActiveBits()
-    log(SOLUTION, "Day 17 Part 2:" + str(finalActiveNeighbors))
+    log(SOLUTION, "Day 17 Part 2: " + str(finalActiveNeighbors))
 
 def puzzleSolution2(lines):
     pass

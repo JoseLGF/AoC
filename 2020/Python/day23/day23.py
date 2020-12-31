@@ -57,7 +57,13 @@ def puzzleSolution1(lines):
         log(DEBUG, "-- Move " + str(move+1) +" --")
         [cups, currentCupIndex] = executeMove(cups, currentCupIndex)
     
-    log(SOLUTION, "Day 23 Part 1: TODO Get numbers after 1 in " + str(cups))
+    number1Index = cups.index(1)
+    cupsStr = ""
+    for i in range(len(cups)):
+        index = (number1Index+i+1)%len(cups)
+        cupsStr += str(cups[index])
+    
+    log(SOLUTION, "Day 23 Part 1: " + cupsStr)
 
 def executeMove(cups, currentCupIndex):
     log(DEBUG, "Cups :" + str(cups))

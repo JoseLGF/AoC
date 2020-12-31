@@ -99,7 +99,17 @@ def puzzleSolution2(lines, ingredients, allergens, safeIngredients):
     
     # Find the correct mapping of ingredients to allergens
     correctMapping = findCorrectAllergenMapping(allergens, dangerousIngredients, ingredientsAndAllergens)
-    log(SOLUTION, "Day 21 Part 2: TODO Sort mapping " + str(correctMapping))
+    # Sort the ingredients in lexicographic order
+    sortedIngredients = sortIngredientsByAllergen(correctMapping)
+    log(SOLUTION, "Day 21 Part 2: " + sortedIngredients)
+
+def sortIngredientsByAllergen(mapping):
+    sortedAllergens = sorted(list(mapping.keys()))
+    print(sortedAllergens)
+    sortedIngredients = ""
+    for allergen in sortedAllergens:
+        sortedIngredients += mapping[allergen] + ","
+    return sortedIngredients[:-1]
     
 def findCorrectAllergenMapping(allergens, dangerousIngredients, ingredientsAndAllergens):
     mappings = list(permutations(allergens))
@@ -113,7 +123,6 @@ def findCorrectAllergenMapping(allergens, dangerousIngredients, ingredientsAndAl
         # Verify if mapping satisfies all constraints
         if (mappingSatisfiesConstraints(mappingDict, ingredientsAndAllergens)):
             return mappingDict
-
 
 def mappingSatisfiesConstraints(mappingDict, ingredientsAndAllergens):
     # As soon as one constrain is not satisfied, return False
@@ -254,7 +263,6 @@ def getAllergensInLine(line):
     allergensInLineList   = allergensStringInLine.split(', ')
     return allergensInLineList
 
-                
 # ------------------
 # Global definitions
 # ------------------
