@@ -43,6 +43,8 @@ DOWN  = 2
 LEFT  = 3
 
 def puzzleSolution1(lines):
+    log(SOLUTION, "Day 20 Part 2: TODO")
+    return
     """
     Calculated variables:
         - blocks           : All Blocks from the input. They include the Header and the content.
@@ -89,7 +91,91 @@ def puzzleSolution1(lines):
     finalResultPart1 = 1
     for cornerTileId in cornerTilesIds:
         finalResultPart1 *= cornerTileId
-    log(SOLUTION, "Day 20 Part 1: " + str(finalResultPart1))
+    log(INFO, "Day 20 Part 1: " + str(finalResultPart1))
+    
+    log(INFO, "Number of tiles:" + str(len(blocks)))
+    log(INFO, "Finding all borders which appear only once...")
+    unique_borders = 0
+    for key in borders_count:
+        if borders_count[key] == 1:
+            unique_borders += 1
+    log(INFO, str(unique_borders))
+    
+    log(INFO, "Calculating borders dictionary...")
+    borders_dict = {}
+    for block in blocks:
+        blockId = getIdFromTileBlock(block)
+        blockBorders = getBordersFromTileBlock(block)
+        blockBordersInts = []
+        for border in blockBorders:
+            border_int = convertBorderToInt(border)
+            blockBordersInts.append(border_int)
+            
+        borders_dict[blockId] = blockBordersInts
+    log(INFO, str(borders_dict))
+        
+    
+    log(INFO, "Constructing simplified image array...")
+    # simplified image is an array of IDs with their rotation
+    simplified_image  = []
+    image_side_length = int(math.sqrt(len(blocks)))
+    for i in range(image_side_length):
+        # Get x-y position in the array given the index
+        x =     i % image_side_length
+        y = math.floor(i / image_side_length)
+        log(INFO, "x, y = " + str(x) + "," + str(y))
+        blockId = -1
+        # Find next block
+        if (x == 0 and y == 0):
+            # Initial top-left block
+            blockId = cornerTilesIds[0]
+            log(INFO, "Choosing block ID: " + str(blockId))
+        elif (y == 0):
+            # Top row
+            # Find next block by looking at previous block
+            leftBlockId = simplified_image[i-1]
+            
+        
+        # Get the block borders
+        blockBorders = borders_dict[blockId]
+        
+        # Correct block rotation
+        if (x == 0 and y == 0):
+            # Initial top-left block
+            rotation = 0
+            isRotationCorrect = False
+            while not isRotationCorrect:
+                blockBorders    = rotateBorders(blockBorders)
+                rotation += 1
+                upBorderCount   = borders_count[blockBorders[UP]]
+                leftBorderCount = borders_count[blockBorders[LEFT]]
+                if (upBorderCount == 1 and leftBorderCount == 1):
+                    isRotationCorrect = True
+            rotation = rotation % 4
+            log(INFO, "Correct block rotation: " + str(rotation))
+        
+        # Append block to image
+        simplified_image.append([blockId, rotation])
+        log(INFO, "Image: " + str(simplified_image))
+    """
+    # Add the first element, a corner block
+    simplified_image.append([1951,-1])
+    log(INFO, str(simplified_image))
+    # Correct image rotation
+    simplified_image_index = 0
+    if (simplified_image_index == 0):
+        # top-left corner
+        # Verify that the left and up borders are correct
+        isCorrect = False
+        while (not isCorrect):
+            rotatedBorders = getBlockIdsRotatedBorders(Id, rotation, borders)
+            # Calculate Borders
+            up =
+            right =
+            down =
+            left =
+        pass
+    """
 
 def rotateBorders(tileBorders):
     newBorders = []

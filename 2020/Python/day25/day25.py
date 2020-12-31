@@ -12,6 +12,7 @@ PROFILING = 1
 INFO      = 2
 WARNING   = 3
 ERROR     = 4
+SOLUTION  = 5
 # Puzzle partition
 PART1     = 1
 PART2     = 2
@@ -27,7 +28,7 @@ PrintInput                = False
 WriteRunResults           = True
 RemoveEOLFromInputLines   = True
 resultsOutputFileName     = 'out_1.txt'
-LogPrintLevel             = INFO
+LogPrintLevel             = SOLUTION
 LogWriteLevel             = INFO
 GenerateRandomInputSample = False
 RandomSampleSize          = 500
@@ -54,6 +55,8 @@ def puzzleSolution1(lines):
 
     encriptionKeyFromDoor = transform(doorPublicKey, cardLoopSize)
     log(INFO, "Encription key Calculated from door: " + str(encriptionKeyFromDoor))
+    
+    log(SOLUTION, "Day 25 Part 1: " + str(encriptionKeyFromDoor))
 
 def calculateLoopSize(subjectNumber, publicKey):
     value = 1

@@ -138,7 +138,7 @@ def main():
         if (checkIfPassportIsValid(passport)):
             validPassports += 1
 
-    print ("Day 4 Part 2 Solution: " + str(validPassports))
+    print ("Day  4 Part 2: " + str(validPassports))
     
     
 if __name__ == "__main__":

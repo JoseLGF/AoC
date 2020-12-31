@@ -21,11 +21,11 @@ PART2     = 2
 # Global Configurations for the program and testing
 # -------------------------------------------------
 RunLevel                  = FULLINPUTRUN
-puzzle_part               = PART1
+puzzle_part               = PART2
 FullInputFileName         = 'input.txt'
 SampleInputFileName       = 'sample.txt'
 PrintInput                = False
-WriteRunResults           = True
+WriteRunResults           = False
 RemoveEOLFromInputLines   = True
 resultsOutputFileName     = 'out_1.txt'
 LogPrintLevel             = SOLUTION
@@ -52,7 +52,7 @@ def puzzleSolution1(lines):
     
     log(INFO, "Ticket scanning error rate for Nearby Tickets:")
     nearbyScanningErrorRate = getTicketScanningErrorRate(nearbyTickets, validValues)
-    log(SOLUTION, "Day 16 Part 1: " + str(nearbyScanningErrorRate))
+    log(INFO, str(nearbyScanningErrorRate))
     
     log(INFO, "Discarding invalid tickets.")
     log(INFO, "Valid tickets:")
@@ -78,6 +78,8 @@ def puzzleSolution2(lines):
     
     log(INFO, "Matching fields with ranges")
     possibleFields = {}
+    
+        
     
     possibleFields = [[], [], [], [], [],[], [], [], [], [],[], [], [], [], [],[], [], [], [], []]
     possibleFieldsIDs = [[], [], [], [], [],[], [], [], [], [],[], [], [], [], [],[], [], [], [], []]
@@ -109,7 +111,9 @@ def puzzleSolution2(lines):
     log(INFO, str(possibleFieldsIDs))
     
     for possibleFieldsID in possibleFieldsIDs:
-        log(SOLUTION, str(possibleFieldsID))
+        log(INFO, str(possibleFieldsID))
+    
+    log(SOLUTION, "Day 16 Part 2: TODO")
     
 def getFieldRangesFromFieldInfo(fields):
     fieldRangesList = []

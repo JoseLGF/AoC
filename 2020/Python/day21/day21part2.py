@@ -72,7 +72,9 @@ def puzzleSolution1(lines):
     safeIngredientsCount = countSafeIngredientsInList(safeIngredients, lines)
     log(INFO,"Safe Ingredients: " + str(safeIngredients))
     
-    log(SOLUTION, "Day 21 Part 1: " + str(safeIngredientsCount))
+    log(INFO, "Day 21 Part 1: " + str(safeIngredientsCount))
+    
+    puzzleSolution2(lines, ingredients, allergens, safeIngredients)
 
 def puzzleSolution2(lines, ingredients, allergens, safeIngredients):
     log(INFO, "******* Solution of part 2")
@@ -97,7 +99,7 @@ def puzzleSolution2(lines, ingredients, allergens, safeIngredients):
     
     # Find the correct mapping of ingredients to allergens
     correctMapping = findCorrectAllergenMapping(allergens, dangerousIngredients, ingredientsAndAllergens)
-    log(INFO, "Day 21 Part 2: " + str(correctMapping))
+    log(SOLUTION, "Day 21 Part 2: TODO Sort mapping " + str(correctMapping))
     
 def findCorrectAllergenMapping(allergens, dangerousIngredients, ingredientsAndAllergens):
     mappings = list(permutations(allergens))

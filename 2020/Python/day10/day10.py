@@ -53,7 +53,7 @@ def puzzleSolution(str_numbers):
     log(LOG_INFO, "******* 3s: " + str(num_3s))
     final_result = num_1s * num_3s
     
-    log(LOG_SOLUTION, "Day 10 Part 1 Solution: " + str(final_result))
+    log(LOG_SOLUTION, "Day 10 Part 1: " + str(final_result))
 
 def parseInts(list_str_ints):
     ints = []

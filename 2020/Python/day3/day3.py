@@ -41,7 +41,7 @@ def main():
         if (element == '#'):
             counter += 1
         #print("Line " + str(i+1) + ": " + element)
-    print("Day 3 part 1 Solution: " + str(counter))
+    print("Day  3 part 1: " + str(counter))
 
 if __name__ == "__main__":
     main()

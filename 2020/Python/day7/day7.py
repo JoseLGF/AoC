@@ -172,7 +172,7 @@ def main():
         # After recursive search is done, check contained bags
         log(LOG_INFO, "******* Contained bags: ")
         log(LOG_INFO, str(foundContainers))
-        log(LOG_SOLUTION, "Day 7 Part 1 Solution: "+ str(len(foundContainers)))
+        log(LOG_SOLUTION, "Day  7 Part 1: "+ str(len(foundContainers)))
             
 # Implement this function to write specific results to a text file
 def writeRunResults(seatIDs):            

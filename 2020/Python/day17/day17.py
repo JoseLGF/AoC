@@ -12,6 +12,7 @@ PROFILING = 1
 INFO      = 2
 WARNING   = 3
 ERROR     = 4
+SOLUTION  = 5
 # Puzzle partition
 PART1     = 1
 PART2     = 2
@@ -23,11 +24,11 @@ RunLevel                  = FULLINPUTRUN
 puzzle_part               = PART1
 FullInputFileName         = 'input.txt'
 SampleInputFileName       = 'sample.txt'
-PrintInput                = True
+PrintInput                = False
 WriteRunResults           = True
 RemoveEOLFromInputLines   = True
 resultsOutputFileName     = 'out_1.txt'
-LogPrintLevel             = INFO
+LogPrintLevel             = SOLUTION
 LogWriteLevel             = INFO
 GenerateRandomInputSample = False
 RandomSampleSize          = 500
@@ -208,7 +209,7 @@ def puzzleSolution1(lines):
     # count active cubes after 6 iterations
     log(INFO, "Active neighbors at the end")
     finalActiveNeighbors = Cube.getActiveBits()
-    log(INFO, str(finalActiveNeighbors))
+    log(SOLUTION, "Day 17 Part 1: " + str(finalActiveNeighbors))
     
 def puzzleSolution2(lines):
     pass

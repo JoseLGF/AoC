@@ -65,7 +65,7 @@ def puzzleSolution(str_seats):
         
         
         if (changedSeats == 0):
-            log(LOG_SOLUTION, "Day 11 Part 2 Solution: " + str(occupiedSeats))
+            log(LOG_SOLUTION, "Day 11 Part 2: " + str(occupiedSeats))
             break
         
         seats = nextIterationSeats

@@ -32,7 +32,7 @@ RandomSampleSize          = 500
 # ----------------------------------------------------
 def puzzleSolution(instructions):
     accFinalValue = executeProgram(instructions)
-    log(LOG_SOLUTION, "Day 8 Part 1 Solution: " + str(accFinalValue))
+    log(LOG_SOLUTION, "Day  8 Part 1: " + str(accFinalValue))
 
 def executeInstruction(instructions, executedInstructions, accumulator, InstructionAddress):
     # Fetch next instruction

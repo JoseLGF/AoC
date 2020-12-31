@@ -12,6 +12,7 @@ PROFILING = 1
 INFO      = 2
 WARNING   = 3
 ERROR     = 4
+SOLUTION  = 5
 # Puzzle partition
 PART1     = 1
 PART2     = 2
@@ -23,11 +24,11 @@ RunLevel                  = FULLINPUTRUN
 puzzle_part               = PART1
 FullInputFileName         = 'input.txt'
 SampleInputFileName       = 'sample.txt'
-PrintInput                = True
+PrintInput                = False
 WriteRunResults           = True
 RemoveEOLFromInputLines   = True
 resultsOutputFileName     = 'out_1.txt'
-LogPrintLevel             = INFO
+LogPrintLevel             = SOLUTION
 LogWriteLevel             = INFO
 GenerateRandomInputSample = False
 RandomSampleSize          = 500
@@ -37,6 +38,8 @@ RandomSampleSize          = 500
 # Functions and globals specific to the current puzzle
 # ----------------------------------------------------
 def puzzleSolution1(lines):
+    log(SOLUTION, "Day 24 part 2: TODO")
+    return
     # If a tile is not in tiles, it means it was never flipped (white)
     # If a tile appears with an odd  value, it means it is black (flipped)
     # If a tile appears with an even value, it means it is white (not flipped)

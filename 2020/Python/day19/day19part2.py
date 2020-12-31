@@ -55,7 +55,7 @@ if RunLevel == FULLINPUTRUN:
 
 def puzzleSolution1(lines):
 
-    log(SOLUTION, "day 19 Part 1: TODO")
+    log(SOLUTION, "day 19 Part 2: TODO")
     return
 
     log(INFO, "Rules:")

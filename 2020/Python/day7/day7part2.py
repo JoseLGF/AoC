@@ -172,7 +172,7 @@ def main():
         
         log(LOG_INFO, "******* Searching contents for color bag shinygold recursively...")
         totalNumberOfBags = searchBagContentsRecursively("shinygold", fileLines)
-        log(LOG_SOLUTION, "Day 7 Part 2 Solution: " + str(totalNumberOfBags))
+        log(LOG_SOLUTION, "Day  7 Part 2: " + str(totalNumberOfBags))
             
 # Implement this function to write specific results to a text file
 def writeRunResults(seatIDs):            

@@ -11,6 +11,7 @@ PROFILING = 1
 INFO      = 2
 WARNING   = 3
 ERROR     = 4
+SOLUTION  = 5
 
 # -------------------------------------------------
 # Global Configurations for the program and testing
@@ -18,11 +19,11 @@ ERROR     = 4
 RunLevel                  = FULLINPUTRUN
 FullInputFileName         = 'input.txt'
 SampleInputFileName       = 'sample3.txt'
-PrintInput                = True
+PrintInput                = False
 WriteRunResults           = True
 RemoveEOLFromInputLines   = True
 resultsOutputFileName     = 'out_1.txt'
-LogPrintLevel             = DEBUG
+LogPrintLevel             = SOLUTION
 LogWriteLevel             = DEBUG
 GenerateRandomInputSample = False
 RandomSampleSize          = 500
@@ -48,6 +49,7 @@ def puzzleSolution(lines):
         log(INFO, str(minimumCommonTime) + ", " + str(Id2))
         minimumCommonTime = getMinimumTimeForTwoIDsWithOffsets(minimumCommonTime, Id2)
         log(INFO, "Min: " + str(minimumCommonTime))
+    log(SOLUTION, "Day 13 Part 2: " + str(minimumCommonTime[1]))
 
 def getMinimumTimeForTwoIDsWithOffsets(Id1, Id2):
     busId1  = Id1[0]

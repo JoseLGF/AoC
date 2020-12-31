@@ -13,11 +13,15 @@ INFO      = 2
 WARNING   = 3
 ERROR     = 4
 SOLUTION  = 5
+# Puzzle partition
+PART1     = 1
+PART2     = 2
 
 # -------------------------------------------------
 # Global Configurations for the program and testing
 # -------------------------------------------------
 RunLevel                  = FULLINPUTRUN
+puzzle_part               = PART1
 FullInputFileName         = 'input.txt'
 SampleInputFileName       = 'sample.txt'
 PrintInput                = False
@@ -33,61 +37,50 @@ RandomSampleSize          = 500
 # ----------------------------------------------------
 # Functions and globals specific to the current puzzle
 # ----------------------------------------------------
-def puzzleSolution(lines):
-    numberOfTerms = 10000
-    ages = [-1 for i in range(numberOfTerms)]
-    log(INFO, "Initialized array!.")
-
-    numbers = getStartingNumbers(lines[0])
-    index = 0
-    # update ages list with intial numbers
-    for number in numbers:
-        ages[number] = index
-        index += 1
-    
-    # First iteration done manually
-    lastNumber = 0
-    index += 1
-    ages[0] = index
-    
-    log(SOLUTION, "Day 15 Part 2: TODO (Too Slow)")
+def puzzleSolution1(lines):
+    log(SOLUTION, "Day 25 Part 2: TODO")
     return
-    
-    log(DEBUG, "Last nums: " + str(ages))
-    # Start iterations
-    #lastNumber = numbers[-1]
-    while (index <= numberOfTerms):
-        if (index % 1000 == 0):
-            log(INFO, "Om nom nom..." + str(index))
-        log(DEBUG, "Index: " + str(index))
-        # process numbers
-        
-        log(DEBUG, "************Last Number: " + str(lastNumber))
-        # if it is the first time the number is spoken
-        if (ages[lastNumber] == -1):
-            log(DEBUG, "0-Appending 0")
-            lastNumber = 0
-            # update age
-            ages[0] = index
-        else:
-            lastNumberAge = index - ages[lastNumber]
-            log(DEBUG, "N-Appending " + str(lastNumberAge))
-            lastNumber = lastNumberAge
-            ages[lastNumberAge] = index
-            #ages.update({ages[lastNumber]: index-ages[lastNumber]})
-        log(DEBUG, "Last nums: " + str(ages))
-        index += 1
-    
-    
-    pass
 
-def getStartingNumbers(line):
-    tokens = line.split(',')
-    log(DEBUG, "Tokens: " + str(tokens))
-    numbers = []
-    for token in tokens:
-        numbers.append(int(token))
-    return numbers
+def calculateLoopSize(subjectNumber, publicKey):
+    value = 1
+    loopSize = 0
+    while(not value == publicKey):
+        loopSize += 1
+        value *= subjectNumber
+        value %= 20201227
+    return loopSize
+
+def transform(subjectNumber, loopSize):
+    value = 1
+    for i in range(loopSize):
+        value *= subjectNumber
+        value %= 20201227
+    return value
+
+def test():
+    cardSubjectNumber = 7
+    doorSubjectNumber = 7
+    
+    cardLoopSize = 8
+    doorLoopSize = 11
+        
+    cardPublicKey = transform(cardSubjectNumber, cardLoopSize)
+    log(INFO, "Card public key:" + str(cardPublicKey))
+    
+    doorPublicKey = transform(doorSubjectNumber, doorLoopSize)
+    log(INFO, "Door public key:" + str(doorPublicKey))
+    
+    encriptionKey = transform(cardPublicKey, doorLoopSize)
+    log(INFO, "Encription key: " + str(encriptionKey))
+    
+    testCardLoopSize = calculateLoopSize(cardSubjectNumber, cardPublicKey)
+    log(INFO, "Card Loop Size: " + str(testCardLoopSize))
+    
+    testDoorLoopSize = calculateLoopSize(doorSubjectNumber, doorPublicKey)
+    log(INFO, "Door Loop Size: " + str(testDoorLoopSize))
+    
+def puzzleSolution2(lines):
+    pass
 
 # ------------------
 # Global definitions
@@ -104,8 +97,13 @@ def main():
     if (GenerateRandomInputSample):
         fileLines = generateRandomInputSubset(fileLines)
 
-    puzzleSolution(fileLines)
-
+    if (puzzle_part == PART1):
+        log(INFO, "******* Solution to part 1:")
+        puzzleSolution1(fileLines)
+    if (puzzle_part == PART2):
+        log(INFO, "******* Solution to part 2:")
+        puzzleSolution2(fileLines)
+       
 # Implement this function to write specific results to a text file
 def writeRunResults(seatIDs):
     log(INFO, "******* Writing results to specified output file")
@@ -145,7 +143,7 @@ def readRawLines(stripEOL=False):
             log(INFO, line.rstrip("\n"))
         log(INFO, "")
     log(INFO, "******* Read " + str(len(raw_lines)) + " lines.")
-    
+   
     if (stripEOL):
         return stripped_lines
     else:
@@ -155,7 +153,7 @@ def log(type, message):
     global logStr
 
     if (not type < LogPrintLevel):
-        print(message, flush=True)
+        print(message)
 
     if (not type < LogWriteLevel):
         logStr += message + "\n"

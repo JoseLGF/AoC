@@ -21,7 +21,7 @@ PROFILING = 1
 INFO      = 2
 WARNING   = 3
 ERROR     = 4
-
+SOLUTION  = 5
 # Puzzle part selection
 PART1 = 1
 PART2 = 2
@@ -33,11 +33,11 @@ RunLevel                 = FULLINPUTRUN
 Puzzle_part              = PART1
 FullInputFileName        = 'input.txt'
 SampleInputFileName      = 'sample.txt'
-PrintInput               = True
+PrintInput               = False
 WriteRunResults          = False
 RemoveEOLFromInputLines  = True
 ResultsOutputFileName    = 'out_1.txt'
-LogPrintLevel            = DEBUG
+LogPrintLevel            = SOLUTION
 LogWriteLevel            = INFO
 # -------------------------------------------------
 
@@ -62,7 +62,7 @@ def puzzleSolution1(lines):
     else:
         winningPlayerScore = calculateScore(player2Cards)
         
-    log(INFO, 'Winning player score:' + str(winningPlayerScore))
+    log(SOLUTION, 'Day 22 Part 1: ' + str(winningPlayerScore))
     pass
 
 def calculateScore(playerCards):
@@ -104,10 +104,7 @@ def getPlayer2Cards(lines):
 
 def puzzleSolution2(lines):
     pass
-    
 
-
-                
 # ------------------
 # Global definitions
 # ------------------

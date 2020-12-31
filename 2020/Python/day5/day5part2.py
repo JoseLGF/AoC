@@ -128,7 +128,7 @@ def main():
             log(LOG_DEBUG, "Searching seat: " + str(seat))
             if not seat in seatIDs:
                 missingSeats.append(seat)
-        log(LOG_SOLUTION, "Day 5 Part 2 Solution: " + str(missingSeats[0]))
+        log(LOG_SOLUTION, "Day  5 Part 2: " + str(missingSeats[0]))
         
         
         if (WriteRunResults):

@@ -21,6 +21,7 @@ PROFILING = 1
 INFO      = 2
 WARNING   = 3
 ERROR     = 4
+SOLUTION  = 5
 
 # Puzzle part selection
 PART1 = 1
@@ -33,12 +34,12 @@ RunLevel                 = FULLINPUTRUN
 Puzzle_part              = PART1
 FullInputFileName        = 'input.txt'
 SampleInputFileName      = 'sample.txt'
-PrintInput               = True
+PrintInput               = False
 WriteRunResults          = True
 RemoveEOLFromInputLines  = True
 ResultsOutputFileName    = 'out_1.txt'
-LogPrintLevel            = DEBUG
-LogWriteLevel            = DEBUG
+LogPrintLevel            = SOLUTION
+LogWriteLevel            = INFO
 # -------------------------------------------------
 
 # ----------------------------------------------------
@@ -56,7 +57,7 @@ def puzzleSolution1(lines):
         log(DEBUG, "-- Move " + str(move+1) +" --")
         [cups, currentCupIndex] = executeMove(cups, currentCupIndex)
     
-    log(INFO, "final:" + str(cups))
+    log(SOLUTION, "Day 23 Part 1: TODO Get numbers after 1 in " + str(cups))
 
 def executeMove(cups, currentCupIndex):
     log(DEBUG, "Cups :" + str(cups))
@@ -115,10 +116,7 @@ def getCups(lines):
 
 def puzzleSolution2(lines):
     pass
-    
 
-
-                
 # ------------------
 # Global definitions
 # ------------------

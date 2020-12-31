@@ -3,9 +3,9 @@ from itertools import combinations
 
 def checkIfTupleOf3NumbersAddTo2020(combination):
     if (combination[0] + combination[1] + combination[2] == 2020):
-        print(str(combination[0]) + " * " + str(combination[1]) + " * " + str(combination[2]) + " = ")
+        #print(str(combination[0]) + " * " + str(combination[1]) + " * " + str(combination[2]) + " = ")
         answer = combination[0] * combination[1] * combination[2]
-        print("Day 1 part 2 Answer: " + str(answer))
+        print("Day  1 part 2: " + str(answer))
     
 
 # Using readlines()

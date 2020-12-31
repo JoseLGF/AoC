@@ -60,7 +60,7 @@ def puzzleSolution(str_seats):
         occupiedSeats = getOccupiedSeats(nextIterationSeats)
         
         if (changedSeats == 0):
-            log(LOG_SOLUTION, "Day 11 Part 1 Solution: " + str(occupiedSeats))
+            log(LOG_SOLUTION, "Day 11 Part 1: " + str(occupiedSeats))
             break
         
         seats = nextIterationSeats

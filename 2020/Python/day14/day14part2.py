@@ -13,6 +13,7 @@ PROFILING = 1
 INFO      = 2
 WARNING   = 3
 ERROR     = 4
+SOLUTION  = 5
 
 # -------------------------------------------------
 # Global Configurations for the program and testing
@@ -20,12 +21,12 @@ ERROR     = 4
 RunLevel                  = FULLINPUTRUN
 FullInputFileName         = 'input.txt'
 SampleInputFileName       = 'sample2.txt'
-PrintInput                = True
+PrintInput                = False
 WriteRunResults           = True
 RemoveEOLFromInputLines   = True
 resultsOutputFileName     = 'out_1.txt'
-LogPrintLevel             = INFO
-LogWriteLevel             = DEBUG
+LogPrintLevel             = SOLUTION
+LogWriteLevel             = INFO
 GenerateRandomInputSample = False
 RandomSampleSize          = 500
 # -------------------------------------------------
@@ -66,7 +67,7 @@ def puzzleSolution(lines):
         sumOfValues += value_int
 
     log(INFO, str(addresses))
-    log(INFO, "Final solution: "+ str(sumOfValues))
+    log(SOLUTION, "Day 14 Part 2: "+ str(sumOfValues))
     pass
 
 def generateBitCombinations(size):

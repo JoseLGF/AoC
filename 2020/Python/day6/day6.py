@@ -128,7 +128,7 @@ def main():
         count = 0
         for each in uniques:
             count += len(each)
-        log(LOG_SOLUTION, "Day 6 Part 1 Solution: " + str(count))
+        log(LOG_SOLUTION, "Day  6 Part 1: " + str(count))
             
 # Implement this function to write specific results to a text file
 def writeRunResults(seatIDs):            

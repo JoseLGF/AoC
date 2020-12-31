@@ -12,6 +12,7 @@ PROFILING = 1
 INFO      = 2
 WARNING   = 3
 ERROR     = 4
+SOLUTION  = 5
 # Puzzle partition
 PART1     = 1
 PART2     = 2
@@ -27,7 +28,7 @@ PrintInput                = False
 WriteRunResults           = True
 RemoveEOLFromInputLines   = True
 resultsOutputFileName     = 'out_1.txt'
-LogPrintLevel             = INFO
+LogPrintLevel             = SOLUTION
 LogWriteLevel             = INFO
 GenerateRandomInputSample = False
 RandomSampleSize          = 500
@@ -65,7 +66,7 @@ def puzzleSolution1(lines):
     linesSum = 0
     for line in lines:
         linesSum += evaluate(line)
-    log(INFO, "Lines sum: " + str(linesSum))
+    log(SOLUTION, "Day 18 Part 2: " + str(linesSum))
     
 
 def puzzleSolution2(lines):

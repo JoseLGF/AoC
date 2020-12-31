@@ -44,7 +44,7 @@ def puzzleSolution(instructions):
         manhattanDistance = getManhattanDistance(shipPosition)
         log(DEBUG, "Waypoint Pose   : " + str(waypointPose))
         log(DEBUG, "Ship's position : " + str(shipPosition))
-    log(SOLUTION, "Day 12 Part 2 Solution: " + str(manhattanDistance))
+    log(SOLUTION, "Day 12 Part 2: " + str(manhattanDistance))
         
 
 def getManhattanDistance(position):

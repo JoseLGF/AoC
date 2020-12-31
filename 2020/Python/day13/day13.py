@@ -11,6 +11,7 @@ PROFILING = 1
 INFO      = 2
 WARNING   = 3
 ERROR     = 4
+SOLUTION  = 5
 
 # -------------------------------------------------
 # Global Configurations for the program and testing
@@ -18,11 +19,11 @@ ERROR     = 4
 RunLevel                  = FULLINPUTRUN
 FullInputFileName         = 'input.txt'
 SampleInputFileName       = 'sample.txt'
-PrintInput                = True
+PrintInput                = False
 WriteRunResults           = True
 RemoveEOLFromInputLines   = True
 resultsOutputFileName     = 'out_1.txt'
-LogPrintLevel             = DEBUG
+LogPrintLevel             = SOLUTION
 LogWriteLevel             = DEBUG
 GenerateRandomInputSample = False
 RandomSampleSize          = 500
@@ -45,10 +46,11 @@ def puzzleSolution(lines):
     for busID in busIDs:
         smallestTimestamps.append(getSmallestTimestampForID(departureTimestamp, busID))
     
-    print("Smallest available bus ID : " + str(min(smallestTimestamps)))
+    #print("Smallest available bus ID : " + str(min(smallestTimestamps)))
     
     minutesToWait = min(smallestTimestamps) - departureTimestamp
     log(INFO, " Time to wait: " + str(minutesToWait))
+    log(SOLUTION, "day 13 Part 1: TODO")
     pass
 
 def getSmallestTimestampForID(departureTimestamp, busID):

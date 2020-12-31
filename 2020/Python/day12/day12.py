@@ -1,6 +1,4 @@
 import random
-import math
-import re
 
 # Run types
 PROBETESTING  = 0
@@ -25,7 +23,7 @@ WriteRunResults           = True
 RemoveEOLFromInputLines   = True
 resultsOutputFileName     = 'out_1.txt'
 LogPrintLevel             = SOLUTION
-LogWriteLevel             = INFO
+LogWriteLevel             = DEBUG
 GenerateRandomInputSample = False
 RandomSampleSize          = 500
 # -------------------------------------------------
@@ -33,54 +31,83 @@ RandomSampleSize          = 500
 # ----------------------------------------------------
 # Functions and globals specific to the current puzzle
 # ----------------------------------------------------
-def puzzleSolution(lines):
-    numbers = getStartingNumbers(lines[0])
-    ages = {}
-    index = 1
-    # update ages dict with intial numbers
-    for number in numbers:
-        ages.update({number : [index,index]})
-        index += 1
-    log(DEBUG, "Last nums: " + str(ages))
-    
-    
-    while (len(numbers) < 2020):
+def puzzleSolution(instructions):   
+    print("Day 12 Part 1: Missing")
         
-        log(DEBUG, "Index: " + str(index))
-        # process numbers
-        lastNumber = numbers[-1]
-        log(DEBUG, "Number " + str(lastNumber))
-        # if it is the first time the number is spoken
-        if (numbers.count(lastNumber) == 1):
-            log(DEBUG, "0-Appending 0")
-            numbers.append(0)
-            # update age
-            ages[0][0] = ages[0][1]
-            ages[0][1] = index
-        else:
-            lastNumberAge = ages[lastNumber][1]-ages[lastNumber][0]
-            log(DEBUG, "N-Appending " + str(lastNumberAge))
-            numbers.append(lastNumberAge)
-            if lastNumberAge in ages:
-                ages[lastNumberAge][0] = ages[lastNumberAge][1]
-                ages[lastNumberAge][1] = index
-            else:
-                ages.update({lastNumberAge: [index,index]})
-            #ages.update({ages[lastNumber]: index-ages[lastNumber]})
-        log(DEBUG, "numbers  : " + str(numbers))
-        log(DEBUG, "Last nums: " + str(ages))
-        index += 1
-    
-    log(SOLUTION, "Day 15 Part 1: " + str(numbers[-1]))
-    pass
 
-def getStartingNumbers(line):
-    tokens = line.split(',')
-    log(DEBUG, "Tokens: " + str(tokens))
-    numbers = []
-    for token in tokens:
-        numbers.append(int(token))
-    return numbers
+def getManhattanDistance(position):
+    position_x  = position[0]
+    position_y  = position[1]
+    
+    return abs(position_x) + abs(position_y)
+
+def parseInstruction(instruction):
+    operation = instruction[0]
+    value = ""
+    for i in range(1, len(instruction)):
+        value += instruction[i]
+    log(DEBUG, "Op: " + operation + ", val: " + value)
+    tokens = [operation, value]
+    return tokens
+
+def executeInstruction(pose, shipPosition, instructionTokens):
+    action                = instructionTokens[0]
+    value                 = int(instructionTokens[1])
+    waypointPosition      = pose[0]
+    waypointPosition_x    = waypointPosition[0]
+    waypointPosition_y    = waypointPosition[1]
+    waypointOrientation   = pose[1]
+    shipPosition_x        = shipPosition[0]
+    shipPosition_y        = shipPosition[1]
+    newWaypointPosition_x = waypointPosition_x
+    newWaypointPosition_y = waypointPosition_y
+    
+    if (action == 'N'):
+        newWaypointPosition_y = waypointPosition_y + value
+    if (action == 'S'):
+        newWaypointPosition_y = waypointPosition_y - value
+    if (action == 'E'):
+        newWaypointPosition_x = waypointPosition_x + value
+    if (action == 'W'):
+        newWaypointPosition_x = waypointPosition_x - value
+    if (action == 'L'):
+        waypointOrientation  = value % 360
+        if (waypointOrientation == 0):
+            pass
+        if (waypointOrientation == 90):
+            newWaypointPosition_x = -waypointPosition_y
+            newWaypointPosition_y = waypointPosition_x
+        if (waypointOrientation == 180):
+            newWaypointPosition_x = -waypointPosition_x
+            newWaypointPosition_y = -waypointPosition_y
+        if (waypointOrientation == 270):
+            newWaypointPosition_x = waypointPosition_y
+            newWaypointPosition_y = -waypointPosition_x
+    if (action == 'R'):
+        waypointOrientation  = value % 360
+        if (waypointOrientation == 0):
+            pass
+        if (waypointOrientation == 90):
+            newWaypointPosition_x = waypointPosition_y
+            newWaypointPosition_y = -waypointPosition_x
+        if (waypointOrientation == 180):
+            newWaypointPosition_x = -waypointPosition_x
+            newWaypointPosition_y = -waypointPosition_y
+        if (waypointOrientation == 270):
+            newWaypointPosition_x = -waypointPosition_y
+            newWaypointPosition_y = waypointPosition_x
+    if (action == 'F'):
+        if (not waypointOrientation in [0, 90, 180, 270]):
+            log(ERROR, "Error: Invalid orientation: " + str(waypointOrientation))
+        else:
+            shipPosition_x = shipPosition_x + (waypointPosition_x * value)
+            shipPosition_y = shipPosition_y + (waypointPosition_y * value)
+    
+    return [[[newWaypointPosition_x, newWaypointPosition_y], waypointOrientation], [shipPosition_x, shipPosition_y]]
+    
+def rotate90degLeft(pos_x, pos_y):
+    new_pos_x = -pos_y
+    new_pos_y =  pos_x
 
 # ------------------
 # Global definitions

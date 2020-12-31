@@ -10,6 +10,6 @@ for line in Lines:
 for number in Numbers:
     requiredNumber = 2020 - number
     if requiredNumber in Numbers:
-        print("Found the numbers:" + str(requiredNumber) + ", " + str(number))
-        print("Day 1 part 1 Answer: " + str(requiredNumber) + " * " + str(number) + " = " + str(requiredNumber*number))
+        #print("Found the numbers:" + str(requiredNumber) + ", " + str(number))
+        print("Day  1 part 1: " + str(requiredNumber*number))
         break

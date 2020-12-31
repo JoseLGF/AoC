@@ -109,7 +109,7 @@ def main():
         count = 0
         for each in commons:
             count += len(each)
-        log(LOG_SOLUTION, "Day 6 Part 2 (Sample) Solution: " + str(count))
+        log(LOG_SOLUTION, "Day  6 Part 2 (Sample) Solution: " + str(count))
     
     
     # Full input run
@@ -143,7 +143,7 @@ def main():
         count = 0
         for each in commons:
             count += len(each)
-        log(LOG_SOLUTION, "Day 6 Part 2 Solution: " + str(count))
+        log(LOG_SOLUTION, "Day  6 Part 2: " + str(count))
             
 # Implement this function to write specific results to a text file
 def writeRunResults(seatIDs):            

@@ -52,7 +52,7 @@ def main():
             counter += 1
         #else:
             #print("Invalid : " + line)
-    print("Day 2 Part 2 Solution: " + str(counter))
+    print("Day  2 Part 2: " + str(counter))
 
 
 if __name__ == "__main__":

@@ -57,7 +57,7 @@ def puzzleSolution(str_numbers):
     chains = getChainsOf1s(differences)
     log(LOG_INFO, "******* Chains of 1s: " + str(chains))
     combinations = calculatePossibleCombinations(chains)
-    log(LOG_SOLUTION, "Day 10 Part 2 Solution: " + str(combinations))
+    log(LOG_SOLUTION, "Day 10 Part 2: " + str(combinations))
     
     
 def getChainsOf1s(diffs):

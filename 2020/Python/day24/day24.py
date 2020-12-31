@@ -12,6 +12,7 @@ PROFILING = 1
 INFO      = 2
 WARNING   = 3
 ERROR     = 4
+SOLUTION  = 5
 # Puzzle partition
 PART1     = 1
 PART2     = 2
@@ -23,11 +24,11 @@ RunLevel                  = FULLINPUTRUN
 puzzle_part               = PART1
 FullInputFileName         = 'input.txt'
 SampleInputFileName       = 'sample.txt'
-PrintInput                = True
+PrintInput                = False
 WriteRunResults           = True
 RemoveEOLFromInputLines   = True
 resultsOutputFileName     = 'out_1.txt'
-LogPrintLevel             = INFO
+LogPrintLevel             = SOLUTION
 LogWriteLevel             = INFO
 GenerateRandomInputSample = False
 RandomSampleSize          = 500
@@ -53,7 +54,7 @@ def puzzleSolution1(lines):
         if (tiles[tile] % 2 == 1):
             black_tiles += 1
     
-    log(INFO, "Final result: " + str(black_tiles))
+    log(SOLUTION, "Day 24 Part 1: " + str(black_tiles))
     
 def identifyTileGivenByLine(line):
     tileX = 0

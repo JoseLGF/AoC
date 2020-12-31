@@ -50,7 +50,7 @@ def puzzleSolution(str_numbers):
     log(LOG_INFO, "******* Invalid numbers: " + str(invalidNumbers))
     
     invalidNumber = invalidNumbers[0]
-    log(LOG_SOLUTION, "Day 9 Part 1 Solution: " + str(invalidNumber))
+    log(LOG_SOLUTION, "Day  9 Part 1: " + str(invalidNumber))
 
 def calculateTailGivenIndex(numbers, index, preambleSize):
     if (index < preambleSize):

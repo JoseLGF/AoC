@@ -50,7 +50,7 @@ def puzzleSolution(str_numbers):
     log(LOG_INFO, "******* Invalid numbers: " + str(invalidNumbers))
     
     invalidNumber = invalidNumbers[0]
-    log(LOG_SOLUTION, "Day 9 Part 1 Solution: " + str(invalidNumber))
+    log(LOG_SOLUTION, "Day  9 Part 1: " + str(invalidNumber))
     
     log(LOG_INFO, "******* Generating contiguous sets:")
     validContiguousSets = []
@@ -67,7 +67,7 @@ def puzzleSolution(str_numbers):
     minNum = min(validContiguousSets[0])
     maxNum = max(validContiguousSets[0])
     solution = minNum + maxNum
-    log(LOG_SOLUTION, "Day 9 Part 2 Solution: " + str(solution))
+    log(LOG_SOLUTION, "Day  9 Part 2: " + str(solution))
 
 def calculateTailGivenIndex(numbers, index, preambleSize):
     if (index < preambleSize):

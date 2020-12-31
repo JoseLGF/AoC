@@ -80,7 +80,7 @@ def main():
     product = 1
     for trees_num in trees_in_slopes:
         product = product * trees_num
-    print("Day 3 Part 2 Solution: " + str(product))
+    print("Day  3 Part 2: " + str(product))
     
     
 

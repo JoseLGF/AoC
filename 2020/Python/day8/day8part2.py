@@ -97,7 +97,7 @@ def doesProgramTerminate(instructions):
     while (not executedInstructions[InstructionAddress] == 1):
         [instructions, executedInstructions, accumulator, InstructionAddress] = executeInstruction(instructions, executedInstructions, accumulator, InstructionAddress)
         if (InstructionAddress == len(instructions)):
-            log(LOG_SOLUTION, "Day 8 Part 2 Solution: " + str(accumulator))
+            log(LOG_SOLUTION, "Day  8 Part 2: " + str(accumulator))
             return True
     return False
 

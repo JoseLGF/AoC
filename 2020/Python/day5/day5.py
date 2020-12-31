@@ -107,7 +107,7 @@ def main():
         #print("*******Calculated seatIDs:")
         #print(seatIDs)
         #print("*******Maximum seat ID:")
-        print("Day 5 Part 1 Solution: " + str(max(seatIDs)))
+        print("Day  5 Part 1: " + str(max(seatIDs)))
         
     
     

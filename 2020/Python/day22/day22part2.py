@@ -21,6 +21,7 @@ PROFILING = 1
 INFO      = 2
 WARNING   = 3
 ERROR     = 4
+SOLUTION  = 5
 
 # Puzzle part selection
 PART1 = 1
@@ -33,11 +34,11 @@ RunLevel                 = FULLINPUTRUN
 Puzzle_part              = PART1
 FullInputFileName        = 'input.txt'
 SampleInputFileName      = 'sample.txt'
-PrintInput               = True
+PrintInput               = False
 WriteRunResults          = False
 RemoveEOLFromInputLines  = True
 ResultsOutputFileName    = 'out_1.txt'
-LogPrintLevel            = INFO
+LogPrintLevel            = SOLUTION
 LogWriteLevel            = INFO
 # -------------------------------------------------
 
@@ -227,7 +228,7 @@ def puzzleSolution1(lines):
     
     winningPlayerScore = combat.calculateWinnerScore()
         
-    log(INFO, 'Winning player score:' + str(winningPlayerScore))
+    log(SOLUTION, 'Day 22 Part 2: ' + str(winningPlayerScore))
     pass
 
 

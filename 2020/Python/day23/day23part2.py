@@ -21,6 +21,7 @@ PROFILING = 1
 INFO      = 2
 WARNING   = 3
 ERROR     = 4
+SOLUTION  = 5
 
 # Puzzle part selection
 PART1 = 1
@@ -33,11 +34,11 @@ RunLevel                 = SAMPLETESTING
 Puzzle_part              = PART1
 FullInputFileName        = 'input.txt'
 SampleInputFileName      = 'sample.txt'
-PrintInput               = True
+PrintInput               = False
 WriteRunResults          = True
 RemoveEOLFromInputLines  = True
 ResultsOutputFileName    = 'out_1.txt'
-LogPrintLevel            = DEBUG
+LogPrintLevel            = SOLUTION
 LogWriteLevel            = DEBUG
 # -------------------------------------------------
 
@@ -47,6 +48,10 @@ LogWriteLevel            = DEBUG
 numberOfMoves = 100
 
 def puzzleSolution1(lines):
+
+    log(SOLUTION, "Day 23 Part 2: TODO")
+    return
+
     # cups : List of integers, parsed from the only line in the input.
     cups = getCups(lines)
     log(INFO, "Cups: " + str(cups))
@@ -124,10 +129,7 @@ def getCups(lines):
 
 def puzzleSolution2(lines):
     pass
-    
 
-
-                
 # ------------------
 # Global definitions
 # ------------------
