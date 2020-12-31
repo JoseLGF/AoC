@@ -31,9 +31,19 @@ RandomSampleSize          = 500
 # ----------------------------------------------------
 # Functions and globals specific to the current puzzle
 # ----------------------------------------------------
-def puzzleSolution(instructions):   
-    print("Day 12 Part 1: Missing")
-        
+def puzzleSolution(instructions):
+    # Position and orientation
+    shipPose = [[0,0] , 0]
+    manhattanDistance = 0
+    log(DEBUG, "pose: " + str(shipPose))
+    log(DEBUG, "manhattan: " + str(manhattanDistance))
+    for instruction in instructions:
+        instructionTokens = parseInstruction(instruction)
+        shipPose = executeInstruction(shipPose, instructionTokens)
+        shipPosition = shipPose[0]
+        manhattanDistance = getManhattanDistance(shipPosition)
+        log(DEBUG, "Ship's position : " + str(shipPosition))
+    print("Day 12 Part 1: " + str(manhattanDistance))
 
 def getManhattanDistance(position):
     position_x  = position[0]
@@ -50,60 +60,37 @@ def parseInstruction(instruction):
     tokens = [operation, value]
     return tokens
 
-def executeInstruction(pose, shipPosition, instructionTokens):
+def executeInstruction(shipPose, instructionTokens):
     action                = instructionTokens[0]
     value                 = int(instructionTokens[1])
-    waypointPosition      = pose[0]
-    waypointPosition_x    = waypointPosition[0]
-    waypointPosition_y    = waypointPosition[1]
-    waypointOrientation   = pose[1]
+    shipPosition          = shipPose[0]
+    shipOrientation       = shipPose[1]
     shipPosition_x        = shipPosition[0]
     shipPosition_y        = shipPosition[1]
-    newWaypointPosition_x = waypointPosition_x
-    newWaypointPosition_y = waypointPosition_y
     
     if (action == 'N'):
-        newWaypointPosition_y = waypointPosition_y + value
+        shipPosition_y = shipPosition_y + value
     if (action == 'S'):
-        newWaypointPosition_y = waypointPosition_y - value
+        shipPosition_y = shipPosition_y - value
     if (action == 'E'):
-        newWaypointPosition_x = waypointPosition_x + value
+        shipPosition_x = shipPosition_x + value
     if (action == 'W'):
-        newWaypointPosition_x = waypointPosition_x - value
+        shipPosition_x = shipPosition_x - value
     if (action == 'L'):
-        waypointOrientation  = value % 360
-        if (waypointOrientation == 0):
-            pass
-        if (waypointOrientation == 90):
-            newWaypointPosition_x = -waypointPosition_y
-            newWaypointPosition_y = waypointPosition_x
-        if (waypointOrientation == 180):
-            newWaypointPosition_x = -waypointPosition_x
-            newWaypointPosition_y = -waypointPosition_y
-        if (waypointOrientation == 270):
-            newWaypointPosition_x = waypointPosition_y
-            newWaypointPosition_y = -waypointPosition_x
+        shipOrientation  = (shipOrientation + value) % 360
     if (action == 'R'):
-        waypointOrientation  = value % 360
-        if (waypointOrientation == 0):
-            pass
-        if (waypointOrientation == 90):
-            newWaypointPosition_x = waypointPosition_y
-            newWaypointPosition_y = -waypointPosition_x
-        if (waypointOrientation == 180):
-            newWaypointPosition_x = -waypointPosition_x
-            newWaypointPosition_y = -waypointPosition_y
-        if (waypointOrientation == 270):
-            newWaypointPosition_x = -waypointPosition_y
-            newWaypointPosition_y = waypointPosition_x
+        shipOrientation  = (shipOrientation - value) % 360
     if (action == 'F'):
-        if (not waypointOrientation in [0, 90, 180, 270]):
-            log(ERROR, "Error: Invalid orientation: " + str(waypointOrientation))
-        else:
-            shipPosition_x = shipPosition_x + (waypointPosition_x * value)
-            shipPosition_y = shipPosition_y + (waypointPosition_y * value)
+        if (shipOrientation == 0):
+            shipPosition_x = shipPosition_x + value
+        if (shipOrientation == 90):
+            shipPosition_y = shipPosition_y + value
+        if (shipOrientation == 180):
+            shipPosition_x = shipPosition_x - value
+        if (shipOrientation == 270):
+            shipPosition_y = shipPosition_y - value
     
-    return [[[newWaypointPosition_x, newWaypointPosition_y], waypointOrientation], [shipPosition_x, shipPosition_y]]
+    return [[shipPosition_x, shipPosition_y], shipOrientation]
     
 def rotate90degLeft(pos_x, pos_y):
     new_pos_x = -pos_y

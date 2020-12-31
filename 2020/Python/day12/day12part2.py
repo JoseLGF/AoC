@@ -32,7 +32,7 @@ RandomSampleSize          = 500
 # Functions and globals specific to the current puzzle
 # ----------------------------------------------------
 def puzzleSolution(instructions):   
-         # Position and orientation
+    # Position and orientation
     waypointPose = [[10,1] , 0]
     shipPosition = [0, 0]
     manhattanDistance = 0

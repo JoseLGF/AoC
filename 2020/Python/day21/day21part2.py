@@ -105,7 +105,6 @@ def puzzleSolution2(lines, ingredients, allergens, safeIngredients):
 
 def sortIngredientsByAllergen(mapping):
     sortedAllergens = sorted(list(mapping.keys()))
-    print(sortedAllergens)
     sortedIngredients = ""
     for allergen in sortedAllergens:
         sortedIngredients += mapping[allergen] + ","
