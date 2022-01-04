@@ -10,7 +10,8 @@ int day01_1() {
 
     int increasing_measurements = 0;
     for (int i=1; i<measurements.size(); i++) {
-        if (measurements[i] > measurements[i-1]) increasing_measurements++;
+        if (measurements[i] > measurements[i-1])
+            increasing_measurements++;
     }
 
     return increasing_measurements;
@@ -34,9 +35,4 @@ int day01_2() {
 
     return increasing_windows;
 
-}
-
-int main(){
-    std::cout << day01_1() << std::endl;
-    std::cout << day01_2() << std::endl;
 }
