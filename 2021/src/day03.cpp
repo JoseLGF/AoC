@@ -126,3 +126,10 @@ int day03_2()
         oxygen_generator_rating * CO2_scrubber_rating;
     return life_support_rating;
 }
+
+void day03()
+{
+    std::cout << "Day 3:" << std::endl;
+    std::cout << day03_1() << std::endl;
+    std::cout << day03_2() << std::endl;
+}

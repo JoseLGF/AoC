@@ -36,3 +36,9 @@ int day01_2() {
     return increasing_windows;
 
 }
+
+void day01() {
+    std::cout << "Day 1:" << std::endl;
+    std::cout << day01_1() << std::endl;
+    std::cout << day01_2() << std::endl;
+}

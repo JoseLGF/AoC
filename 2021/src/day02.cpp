@@ -57,3 +57,10 @@ int day02_2() {
 
     return depth * distance;
 }
+
+void day02()
+{
+    std::cout << "Day 2:" << std::endl;
+    std::cout << day02_1() << std::endl;
+    std::cout << day02_2() << std::endl;
+}

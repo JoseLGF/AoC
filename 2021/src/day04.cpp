@@ -120,7 +120,7 @@ std::vector<int> get_random_order(std::string str_order)
     return vect;
 }
 
-int day04_1()
+void day04()
 {
     std::ifstream infile("input/day04.txt");
 
@@ -142,20 +142,22 @@ int day04_1()
         boards.push_back(Board(boards_numbers, 25*i));
     }
 
+    // Capture all winning numbers in the order in which they win
+    std::vector<int> winning_numbers;
+
     // Simulate game
     for (auto n : random_order) {
         for (auto& board: boards) {
-            board.check_number(n);
-            if (board.checkWinner()) {
-                return board.getScore();
+            if (!board.checkWinner()) {
+                board.check_number(n);
+                if (board.checkWinner())
+                    winning_numbers.push_back(board.getScore());
             }
         }
     }
 
-    return -1;
-}
-
-int day04_2()
-{
-    return -1;
+    // Display final results
+    std::cout << "Day 4:" << std::endl;
+    std::cout << winning_numbers.front() << std::endl;
+    std::cout << winning_numbers.back() << std::endl;
 }
