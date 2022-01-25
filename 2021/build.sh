@@ -3,6 +3,7 @@ g++ -c -g src/day02.cpp
 g++ -c -g src/day03.cpp
 g++ -c -g src/day04.cpp
 g++ -c -g src/day05.cpp
+g++ -c -g src/day06.cpp
 g++ -c -g src/main.cpp
 g++ *.o -o aoc2021
 
