@@ -12,6 +12,7 @@ OBJ = 	main.o \
 		day04.o \
 		day05.o \
 		day06.o \
+		day07.o \
 
 %.o: %.cpp
 	$(CC) -c -o $@ $<  $(CFLAGS)
