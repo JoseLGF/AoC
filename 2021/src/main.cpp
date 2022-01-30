@@ -7,6 +7,7 @@ void day04();
 void day05();
 void day06();
 void day07();
+void day08();
 
 int main(){
     std::cout << "Advent of Code 2021 solutions:" << std::endl;
@@ -18,4 +19,5 @@ int main(){
     day05();
     day06();
     day07();
+    day08();
 }
