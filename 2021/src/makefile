@@ -1,6 +1,6 @@
 CC=g++
 
-CFLAGS=-std=gnu++11 -ggdb -O0
+CFLAGS=-std=c++20 -ggdb -O0
 
 
 #DEPS = board.h config.h sprite_config.h ui.h controls.h
