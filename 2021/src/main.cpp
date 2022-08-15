@@ -1,6 +1,6 @@
 #include <iostream>
 
-#define TESTING
+//#define TESTING
 
 void day01();
 void day02();
@@ -28,6 +28,6 @@ int main(){
     day08();
     day09();
     day10();
-#endif
     day11();
+#endif
 }

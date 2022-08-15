@@ -21,7 +21,7 @@ OBJ = 	main.o \
 %.o: %.cpp
 	$(CC) -c -o $@ $<  $(CFLAGS)
 
-aoc2021: $(OBJ)
+../aoc2021: $(OBJ)
 	$(CC) -o $@ $^ $(CFLAGS)
 
 .PHONY: clean

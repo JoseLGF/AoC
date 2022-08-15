@@ -118,10 +118,29 @@ public:
         return total_flashes;
     }
 
+    int get_total_steps() {
+        return steps;
+    }
+
     void simulate_until_step(int limit) {
         while(steps<limit) {
             simulate_step();
         }
+    }
+
+    int simulate_until_sync() {
+        while (!check_sync()) {
+            simulate_step();
+        }
+        return steps;
+    }
+
+    // Returns true when all energy fields are zero
+    bool check_sync() {
+        for (auto& e : energy_levels) {
+            if (e != 0) return false;
+        }
+        return true;
     }
 
 };
@@ -130,7 +149,7 @@ void day11()
 {
     int part_1_solution = -1;
     int part_2_solution = -1;
-    std::ifstream infile("../input/day11.txt");
+    std::ifstream infile("input/day11.txt");
 
     // Parse data
     std::string line;
@@ -141,13 +160,14 @@ void day11()
 
     // Init
     OctopusField of(lines);
-    of.display();
 
     // Part 1
     of.simulate_until_step(100);
     part_1_solution = of.get_total_flashes();
 
     // Part 2
+    of.simulate_until_sync();
+    part_2_solution = of.get_total_steps();
 
     // Display final results
     std::cout << "Day 11:" << std::endl;
