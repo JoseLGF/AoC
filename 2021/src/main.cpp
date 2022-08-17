@@ -1,6 +1,6 @@
 #include <iostream>
 
-//#define TESTING
+#define TESTING
 
 void day01();
 void day02();
@@ -13,6 +13,7 @@ void day08();
 void day09();
 void day10();
 void day11();
+void day12();
 
 int main(){
     std::cout << "Advent of Code 2021 solutions:" << std::endl;
@@ -30,4 +31,5 @@ int main(){
     day10();
     day11();
 #endif
+    day12();
 }
