@@ -56,24 +56,44 @@ struct Cave_Node
 class Path
 {
     std::vector<Cave_Node*> path_nodes;
+    bool has_small_cave_twice;
+    Cave_Node* repeated;
+    std::string repr;
 
     public:
     Path(Cave_Node* node) {
+        repeated = nullptr;
+        has_small_cave_twice = false;
         if (node->type != CaveType::Start_location) {
             std::cout << "Error, initial node must always be a start node" << std::endl;
             return;
         }
         path_nodes.push_back(node);
+        repr += node->name + ",";
     }
 
     Path(Path* that, Cave_Node* last_node) {
+        repeated = nullptr;
+        has_small_cave_twice = false;
+        //repeated = that->repeated;
+        //has_small_cave_twice = that->has_small_cave_twice;
         for (auto pn: that->path_nodes) {
             add_node(pn);
         }
         add_node(last_node);
+        repr = that->repr + last_node->name + ",";
     }
 
     void add_node(Cave_Node* node) {
+        // Check if this node has been inserted before
+        for (auto& p_node: path_nodes) {
+            if ( (p_node->name == node->name) &&
+                  p_node->type == CaveType::Small_cave) {
+                has_small_cave_twice = true;
+                repeated = node;
+                break;
+            }
+        }
         path_nodes.push_back(node);
     }
 
@@ -88,7 +108,7 @@ class Path
         return false;
     }
 
-    std::vector<Path> expand() {
+    std::vector<Path> expand_first_policy() {
         std::vector<Path> children {};
         Cave_Node* current_location = path_nodes.back();
         std::vector<Cave_Node*> possible_connections {};
@@ -116,6 +136,37 @@ class Path
         return children;
     }
 
+    std::vector<Path> expand_second_policy() {
+        std::vector<Path> children {};
+        Cave_Node* current_location = path_nodes.back();
+        std::vector<Cave_Node*> possible_connections {};
+        // Check all places we can visit from the path's last node
+        std::vector<Cave_Node*> connections = current_location->connections;
+        for (auto connection : connections) {
+            // Discard Start location
+            if (connection->type == CaveType::Start_location) {
+                continue; // discard
+            }
+            // Discard small caves if they have already been visited
+            if (connection->type == CaveType::Small_cave) {
+                // Check if we have visited a small cave twice
+                if (has_small_cave_twice) {
+                    // check if already visited
+                    if (has_been_visited(connection)) {
+                        continue;
+                    }
+                }
+            }
+            // Add this connection to the children
+            possible_connections.push_back(connection);
+        }
+        // Make new paths with the possible connections
+        for (auto pc: possible_connections) {
+            children.push_back(Path(this, pc));
+        }
+        return children;
+    }
+
     bool has_been_visited(Cave_Node* node) {
         for (auto previous_node : path_nodes) {
             if (previous_node == node) {
@@ -124,6 +175,13 @@ class Path
         }
         return false;
     }
+
+    void display() {
+        for (auto& node: path_nodes) {
+            std:: cout << node->name << "->";
+        }
+            std:: cout << std::endl;
+    }
 };
 
 class Cave_Network
@@ -131,6 +189,7 @@ class Cave_Network
     std::vector<Cave_Node> nodes;
     Cave_Node* start_node;
     Cave_Node* end_node;
+    std::vector<Path> complete_paths;
 
 public:
     // The network can be initialized from a vector of strings
@@ -181,8 +240,8 @@ public:
         return nullptr;
     }
 
-    int find_paths() {
-        std::vector<Path> complete_paths;
+    int find_paths(int policy_number) {
+        complete_paths.clear();
         std::vector<Path> current_paths;
         // Create the initial path
         current_paths.push_back(Path(start_node));
@@ -192,7 +251,12 @@ public:
             std::vector<Path> children;
             current_paths.pop_back();
             // Expand the current path
-            children = current_path.expand();
+            if (policy_number == 1) {
+                children = current_path.expand_first_policy();
+            }
+            if (policy_number == 2) {
+                children = current_path.expand_second_policy();
+            }
             // From the children, separate complete paths and current
             // paths
             for (auto& path: children) {
@@ -207,6 +271,14 @@ public:
         return complete_paths.size();
 
     }
+
+    void display_complete_paths() {
+        for (auto& path: complete_paths) {
+            path.display();
+        }
+            std:: cout << std::endl;
+    }
+
 };
 
 
@@ -248,9 +320,11 @@ void day12()
     }
 
     // Part 1
-    part_1_solution = network.find_paths();
+    part_1_solution = network.find_paths(1);
 
     // Part 2
+    part_2_solution = network.find_paths(2);
+    //network.display_complete_paths();
 
     // Display final results
     std::cout << "Day 12:" << std::endl;
