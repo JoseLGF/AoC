@@ -14,6 +14,9 @@
 #include <queue>
 #include <climits>
 
+#define CAVE_SMALL 0
+#define CAVE_LARGE 1
+
 struct Node
 {
     int cost;
@@ -65,32 +68,117 @@ class NodeComparator
 
 class Maze
 {
+    // Risk levels of the initial tile
+    std::vector<std::vector<int>> risk_levels;
+    // Nodes for graph traversal
     std::vector<std::vector<Node>> nodes;
-    int width;
-    int height;
+    // width and height of the tile
+    int tile_width;
+    int tile_height;
+    // width and height of the cave
+    int cave_width;
+    int cave_height;
+    // configuration to indicate if we are using the small or large maze
+    int cave_size_config;
 
     public:
     Maze(std::vector<std::string> lines) {
-        height = lines.size();
-        width = lines[0].size();
+        tile_height = lines.size();
+        tile_width = lines[0].size();
 
-        // Allocate the nodes first
-        for (int x=0; x<width; x++) {
-            nodes.push_back(std::vector<Node>(height));
+        // Allocate risk levels
+        for (int x=0; x<tile_width; x++) {
+            risk_levels.push_back(
+                    std::vector<int>(
+                        tile_height));
         }
-
-        // Initialize them
-        for (int y=0; y<height; y++) {
-            for (int x=0; x<width; x++) {
-                nodes[x][y].init(lines[y][x]-'0', x, y);
+        // Populate risk levels
+        for (int y=0; y<tile_height; y++) {
+            for (int x=0; x<tile_width; x++) {
+                risk_levels[x][y] = lines[y][x]-'0';
             }
         }
     }
 
-    void print() {
-        for (auto row: nodes) {
-            for (auto node: row) {
-                std::cout << node.cost;
+    void set_cave_size(int size) {
+        if ( (size != CAVE_SMALL) && (size != CAVE_LARGE)) {
+            std::cout << "Error, wrong map size" << std::endl;
+            return;
+        }
+        cave_size_config = size;
+        if (size == CAVE_SMALL) {
+            cave_height = tile_height;
+            cave_width = tile_width;
+        }
+        if (size == CAVE_LARGE) {
+            cave_height = tile_height * 5;
+            cave_width = tile_width * 5;
+        }
+    }
+
+    int calculate_node_risk(int x, int y) {
+        int tile_x = x % tile_width;
+        int tile_y = y % tile_height;
+        int level = risk_levels[tile_x][tile_y];
+        if (cave_size_config == CAVE_SMALL) {
+            return level;
+        }
+        if (cave_size_config == CAVE_LARGE) {
+            int x_offset = x / tile_width;
+            int y_offset = y / tile_height;
+            int new_level = level + x_offset + y_offset;
+            // wrap around
+            if (new_level > 9) {
+                new_level =
+                    ((new_level -1)
+                     % 9)
+                    + 1;
+            }
+            return new_level;
+        }
+        std::cout << "Error, maze not properly configured" << std::endl;
+        return -1;
+    }
+
+    void generate_graph() {
+        // clear any previous graph
+        nodes.clear();
+
+        // Allocate the nodes first
+        for (int x=0; x<cave_width; x++) {
+            nodes.push_back(
+                    std::vector<Node>(
+                        cave_height));
+        }
+
+        // Initialize them
+        for (int y=0; y<cave_height; y++) {
+            for (int x=0; x<cave_width; x++) {
+                nodes[x][y].init(
+                        calculate_node_risk(
+                            x,
+                            y),
+                        x,
+                        y);
+            }
+        }
+    }
+
+    void print_graph() {
+        std::cout << "Maze nodes:" << std::endl;
+        for (int y=0; y<cave_height; y++) {
+            for (int x=0; x<cave_width; x++) {
+                std::cout << nodes[x][y].cost;
+            }
+            std::cout << std::endl;
+        }
+    }
+
+    void print_tile() {
+        std::cout << "Maze tiles:" << std::endl;
+        for (int y=0; y<tile_height; y++) {
+            for (int x=0; x<tile_width; x++) {
+                std::cout << risk_levels[x][y];
             }
             std::cout << std::endl;
         }
@@ -107,8 +195,8 @@ class Maze
         while (not pq.empty()) {
             // Expand node with the minimum cost
             Node* current_node = pq.top();
-            std::cout << "Expanding: ";
-            current_node->print();
+            //std::cout << "Expanding: ";
+            //current_node->print();
             pq.pop();
             // Check if node is target
             if (is_target(current_node)) {
@@ -118,8 +206,8 @@ class Maze
             std::vector<Node*> children = expand(current_node);
             // Add children to Q only if they have lower cost
             for (auto n: children) {
-                std::cout << "    Child:";
-                n->print();
+                //std::cout << "    Child:";
+                //n->print();
                 pq.push(n);
             }
         }
@@ -128,8 +216,8 @@ class Maze
     }
 
     bool is_target(Node* node) {
-        if (node->x == width-1 &&
-            node->y == height-1)
+        if (node->x == cave_width-1 &&
+            node->y == cave_height-1)
         {
             return true;
         }
@@ -164,7 +252,7 @@ class Maze
             }
         }
         // down
-        if (y<height-1) {
+        if (y<cave_height-1) {
             new_x = x;
             new_y = y+1;
             new_nac = nac + nodes[new_x][new_y].cost;
@@ -173,7 +261,7 @@ class Maze
             }
         }
         // right
-        if (x<width-1) {
+        if (x<cave_width-1) {
             new_x = x+1;
             new_y = y;
             new_nac = nac + nodes[new_x][new_y].cost;
@@ -201,17 +289,20 @@ void day15()
     }
 
     // Init
-    for (auto line: lines) {
-        std::cout << line << std::endl;
-    }
     Maze maze(lines);
-    std::cout << "Maze:" << std::endl;
-    maze.print();
+    //maze.print_tile();
 
     // Part 1
+    maze.set_cave_size(CAVE_SMALL);
+    maze.generate_graph();
+    //maze.print_graph();
     part_1_solution = maze.find_lowest_risk_path();
 
     // Part 2
+    maze.set_cave_size(CAVE_LARGE);
+    maze.generate_graph();
+    //maze.print_graph();
+    part_2_solution = maze.find_lowest_risk_path();
 
     // Display final results
     std::cout << "Day 15:" << std::endl;
