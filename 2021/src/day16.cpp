@@ -74,10 +74,12 @@ class BitStream
                 << std::endl;
             return out;
         }
+
         out.insert(
                 out.end(),
                 bits->begin()+index,
                 bits->end()+index+num_bits);
+
         index += num_bits;
         return out;
     }
@@ -148,10 +150,7 @@ class Packet
         length = 0;
         value = 0;
         this->stream = stream;
-        std::cout << "Creating packet from position:"
-            << (uint64_t)stream.get_index() << std::endl;
         parse();
-
     }
 
     void parse () {
@@ -160,13 +159,9 @@ class Packet
         type_ID = stream.consume_int(3);
         length += 3;
 
-        std::cout << " V:" << (int)version
-                  << " T:" << (int)type_ID << std::endl;
-
         if (type_ID == 4) {
             parse_literal_value();
         }
-        // Operator types
         else {
             parse_operator_type();
         }
@@ -186,11 +181,91 @@ class Packet
             parse_n_subpackets(num_subpackets);
         }
 
+        decode_operation_value();
+    }
+
+    void decode_operation_value() {
+        switch (type_ID) {
+            case 0: decode_sum();          break;
+            case 1: decode_product();      break;
+            case 2: decode_min();          break;
+            case 3: decode_max();          break;
+            case 5: decode_greater_than(); break;
+            case 6: decode_less_than();    break;
+            case 7: decode_equal_to();     break;
+        }
+    }
+
+    void decode_sum() {
+        uint64_t sum = 0;
+        for (auto sub : sub_packets) {
+            sum += sub->value;
+        }
+        this->value = sum;
+    }
+
+    void decode_product() {
+        uint64_t prod = 1;
+        for (auto sub : sub_packets) {
+            prod *= sub->value;
+        }
+        this->value = prod;
+    }
+
+    void decode_min() {
+        uint64_t min = 0xFFFFFFFFFFFFFFFF;
+        for (auto sub : sub_packets) {
+            if (sub->value < min) {
+                min = sub->value;
+            }
+        }
+        this->value = min;
+    }
+
+    void decode_max() {
+        uint64_t max = 0;
+        for (auto sub : sub_packets) {
+            if (sub->value > max) {
+                max = sub->value;
+            }
+        }
+        this->value = max;
+    }
+
+    void decode_greater_than() {
+        uint64_t first = sub_packets[0]->value;
+        uint64_t second = sub_packets[1]->value;
+        if (first > second) {
+            this->value = 1;
+        }
+        else {
+            this->value = 0;
+        }
+    }
+
+    void decode_less_than() {
+        uint64_t first = sub_packets[0]->value;
+        uint64_t second = sub_packets[1]->value;
+        if (first < second) {
+            this->value = 1;
+        }
+        else {
+            this->value = 0;
+        }
+    }
+
+    void decode_equal_to() {
+        uint64_t first = sub_packets[0]->value;
+        uint64_t second = sub_packets[1]->value;
+        if (first == second) {
+            this->value = 1;
+        }
+        else {
+            this->value = 0;
+        }
     }
 
     void parse_subpackets_in_n_bits(uint64_t nbits) {
-        std::cout << "Creating packets from " <<
-            (int)nbits << " bits." << std::endl;
         bool stop = false;
         uint64_t consumed_bits = 0;
         while (! stop) {
@@ -208,8 +283,6 @@ class Packet
 
     void parse_n_subpackets(uint64_t npackets) {
         uint64_t consumed_bits {};
-        std::cout << "Creating packets from " <<
-            (int)npackets << " packets." << std::endl;
         for (uint64_t i=0; i<npackets; i++) {
             Packet* sub = new Packet(stream);
             stream.advance(sub->get_length());
@@ -220,28 +293,25 @@ class Packet
     }
 
     void parse_literal_value() {
+
         bool stop = false;
         while (not stop) {
             stop = !(stream.consume_int(1));
             length += 1;
             uint64_t nibble_packet = stream.consume_int(4);
             length += 4;
-            std::cout << nibble_packet << std::endl;
             value_nibbles.push_back(nibble_packet);
         }
-        std::cout << "Parsed " << value_nibbles.size() << " nibbles." << std::endl;
-        value = 0;
+
         for (uint64_t nibble: value_nibbles) {
             value = (value << 4);
             value |= (nibble & 0xF);
         }
-        std::cout << "value: " << (int)value << std::endl;
-        // Advance the remaining padding
+
         int consumed_bits = value_nibbles.size() * 5;
         int remainder = consumed_bits % 4;
         if (remainder != 0) {
             int padding = 4 - remainder;
-            std::cout << "Skipping padding " << (int)padding << std::endl;
             stream.advance(padding);
         }
     }
@@ -258,12 +328,15 @@ class Packet
         return version + sum;
     }
 
+    uint64_t get_value() {
+        return value;
+    }
 };
 
 void day16()
 {
     int part_1_solution = -1;
-    int part_2_solution = -1;
+    uint64_t part_2_solution = -1;
     std::ifstream infile("input/day16.txt");
 
     // Parse data
@@ -273,21 +346,19 @@ void day16()
         lines.push_back(line);
     }
 
-    std::cout << lines[0].size()*8 << " Zeroes" << std::endl;
-
     // Init
     auto bits = make_bit_sequence(lines[0]);
     auto bitstream = BitStream(&bits);
-        std::cout << line << std::endl;
     Packet packet(bitstream);
 
     // Part 1
     part_1_solution = packet.get_version_sum();
 
     // Part 2
+    part_2_solution = packet.get_value();
 
     // Display final results
     std::cout << "Day 16:" << std::endl;
     std::cout << part_1_solution << std::endl;
-    std::cout << part_2_solution << std::endl;
+    std::cout << (uint64_t)part_2_solution << std::endl;
 }
