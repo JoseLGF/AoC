@@ -2,8 +2,6 @@ CC=g++
 
 CFLAGS=-std=c++20 -ggdb -O0
 
-#DEPS = board.h config.h sprite_config.h ui.h controls.h
-
 OBJ = 	main.o \
 		day01.o \
 		day02.o \
@@ -21,6 +19,7 @@ OBJ = 	main.o \
 		day14.o \
 		day15.o \
 		day16.o \
+		day17.o \
 
 %.o: %.cpp
 	$(CC) -c -o $@ $<  $(CFLAGS)
