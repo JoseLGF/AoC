@@ -667,6 +667,19 @@ day18()
     part_1_solution = magnitude_of_snail_number(num);
 
     // Part 2
+    int max_magnitude = -1;
+    for (int i=0; i<lines.size(); i++) {
+        for (int j=0; j<lines.size(); j++) {
+            auto left = make_snail_number(lines[i]);
+            auto right = make_snail_number(lines[j]);
+            auto sum = add_snail_numbers(left, right);
+            auto magnitude = magnitude_of_snail_number(sum);
+            if (magnitude > max_magnitude) {
+                max_magnitude = magnitude;
+            }
+        }
+    }
+    part_2_solution = max_magnitude;
 
     // Display final results
     std::cout << "Day 18:" << std::endl;
