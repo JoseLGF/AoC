@@ -475,6 +475,20 @@ add_snail_numbers_without_reduce(BNode* left, BNode* right)
     return result;
 }
 
+int
+magnitude_of_snail_number(BNode* node)
+{
+    if (is_leaf_node(node)) {
+        return node->value;
+    }
+    // It is guaranteed that all non-leaf nodes are always pairs
+    return (
+        3 * magnitude_of_snail_number(node->left_child) +
+        2 * magnitude_of_snail_number(node->right_child)
+    );
+
+}
+
 #pragma endregion
 
 #pragma region DRIVER CODE
@@ -596,6 +610,22 @@ day18()
     print_snail_number(a3);
     reduce_snail_number(a3);
 
+    // Check magnitude calculation
+    std::cout << "Magnitude calculations:" << std::endl;
+    auto m1 = make_snail_number("[[1,2],[[3,4],5]]");
+    auto m2 = make_snail_number("[[[[0,7],4],[[7,8],[6,0]]],[8,1]]");
+    auto m3 = make_snail_number("[[[[1,1],[2,2]],[3,3]],[4,4]]");
+    auto m4 = make_snail_number("[[[[3,0],[5,3]],[4,4]],[5,5]]");
+    auto m5 = make_snail_number("[[[[5,0],[7,4]],[5,5]],[6,6]]");
+    auto m6 = make_snail_number("[[[[8,7],[7,7]],[[8,6],[7,7]]],[[[0,7],[6,6]],[8,7]]]");
+
+    std::cout << magnitude_of_snail_number(m1) << std::endl;
+    std::cout << magnitude_of_snail_number(m2) << std::endl;
+    std::cout << magnitude_of_snail_number(m3) << std::endl;
+    std::cout << magnitude_of_snail_number(m4) << std::endl;
+    std::cout << magnitude_of_snail_number(m5) << std::endl;
+    std::cout << magnitude_of_snail_number(m6) << std::endl;
+
 }
 
 #endif
@@ -609,7 +639,7 @@ day18()
 {
     int part_1_solution = -1;
     int part_2_solution = -1;
-    std::ifstream infile("input/example18_4.txt");
+    std::ifstream infile("input/day18.txt");
 
     // Parse data
     std::string line;
@@ -634,6 +664,7 @@ day18()
     print_snail_number(num);
 
     // Part 1
+    part_1_solution = magnitude_of_snail_number(num);
 
     // Part 2
 
