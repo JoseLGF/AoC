@@ -5,7 +5,7 @@
 #include <algorithm>
 #include <cmath>
 
-#define TESTING
+//#define TESTING
 
 #pragma region BASIC NODE OPERATIONS
 
@@ -22,6 +22,14 @@ BNode
         this->left_child = nullptr;
         this->right_child = nullptr;
         this->parent = nullptr;
+        this->value = -1;
+    }
+
+    BNode(BNode* parent)
+    {
+        this->left_child = nullptr;
+        this->right_child = nullptr;
+        this->parent = parent;
         this->value = -1;
     }
 };
@@ -81,12 +89,10 @@ make_tree(std::stringstream& str, BNode* parent)
     }
 
     if('[' == c) {
-        parent->left_child = new BNode();
-        parent->left_child->parent = parent;
+        parent->left_child = new BNode(parent);
         make_tree(str, parent->left_child);
         str >> c; // consume ','
-        parent->right_child = new BNode();
-        parent->right_child->parent = parent;
+        parent->right_child = new BNode(parent);
         make_tree(str, parent->right_child);
         str >> c; // consume ']'
     }
@@ -98,14 +104,12 @@ copy_tree(BNode* source, BNode* target)
     target->value = source->value;
 
     if(source->left_child != nullptr) {
-        target->left_child = new BNode();
-        target->left_child->parent = target;
+        target->left_child = new BNode(target);
         copy_tree(source->left_child, target->left_child);
     }
 
     if(source->right_child != nullptr) {
-        target->right_child = new BNode();
-        target->right_child->parent = target;
+        target->right_child = new BNode(target);
         copy_tree(source->right_child, target->right_child);
     }
 }
@@ -133,31 +137,6 @@ delete_subtree(BNode* node)
     // Deletes all nodes below input node,
     delete_tree(node->left_child);
     delete_tree(node->right_child);
-}
-
-#define COUNT 5
-void
-draw_tree(BNode* root, int space=0)
-{
-    // Base case
-    if (root == NULL)
-        return;
- 
-    // Increase distance between levels
-    space += COUNT;
- 
-    // Process right child first
-    draw_tree(root->right_child, space);
- 
-    // Print current node after space
-    // count
-    std::cout<<std::endl;
-    for (int i = COUNT; i < space; i++)
-        std::cout<<" ";
-    std::cout<<root->value<<"\n";
- 
-    // Process left child
-    draw_tree(root->left_child, space);
 }
 
 #pragma endregion
@@ -414,9 +393,9 @@ split_once(BNode* root_node)
             << leaf_node->value << std::endl;
             // replace with ...
             //leaf_node->value = -1;
-            leaf_node->left_child = new BNode();
+            leaf_node->left_child = new BNode(leaf_node);
             leaf_node->left_child->value = floor(leaf_node->value / 2.0);
-            leaf_node->right_child = new BNode();
+            leaf_node->right_child = new BNode(leaf_node);
             leaf_node->right_child->value = ceil(leaf_node->value / 2.0);
             leaf_node->value = -1;
             return true;
@@ -644,13 +623,14 @@ day18()
     print_snail_number(num);
     std::cout << std::endl;
     for (int i=1; i<lines.size(); i++) {
-        
         num = add_snail_numbers(
             num,
             make_snail_number(lines[i]));
         print_snail_number(num);
         std::cout << std::endl;
     }
+    std::cout << std::endl << "Result after all additions" <<
+    std::endl;
     print_snail_number(num);
 
     // Part 1
