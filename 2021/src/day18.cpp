@@ -34,21 +34,6 @@ BNode
     }
 };
 
-std::ostream&
-operator<<(std::ostream& os, const BNode& n)
-{
-    if (n.left_child != nullptr) {
-        os << "X";
-    }
-    if (n.value != -1) {
-        os << n.value;
-    }
-    if (n.right_child != nullptr) {
-        os << "X";
-    }
-    return os;
-}
-
 bool
 is_leaf_node(BNode* node)
 {
@@ -139,18 +124,31 @@ delete_subtree(BNode* node)
     delete_tree(node->right_child);
 }
 
+void
+replace_node_with_value(BNode* node, int value)
+{
+    delete_tree(node->left_child);
+    delete_tree(node->right_child);
+    node->left_child = nullptr;
+    node->right_child = nullptr;
+    node->value = value;
+}
+
+void
+replace_node_with_pair(BNode* node, int left_value, int right_value)
+{
+    delete_tree(node->left_child);
+    delete_tree(node->right_child);
+    node->left_child = new BNode(node);
+    node->left_child->value = left_value;
+    node->right_child = new BNode(node);
+    node->right_child->value = right_value;
+    node->value = -1;
+}
+
 #pragma endregion
 
 #pragma region FUNCTORS AND OPERATIONS FOR TRAVERSING TREES
-
-template <typename T>
-struct
-print_functor
-{
-    void operator() (T e) {
-        std::cout << *e << " ";
-    }
-};
 
 template <typename T>
 struct
@@ -214,32 +212,20 @@ apply_on_pair_nodes(BNode* node, Functor& fun)
     }
 }
 
-void
-print_tree(BNode* node) {
-    print_functor<BNode*> pf;
-    preorder_traverse(node, pf);
-}
-
-void
-print_leaves(BNode* node) {
-    print_functor<BNode*> pf;
-    apply_on_leaves(node, pf);
-}
-
 std::vector<BNode*>
 make_tree_as_array(BNode* root_node)
 {
-        accumulate_functor<BNode*> af;
-        preorder_traverse(root_node, af);
-        return af.elements;
+    accumulate_functor<BNode*> af;
+    preorder_traverse(root_node, af);
+    return af.elements;
 }
 
 std::vector<BNode*>
 make_tree_pairs_as_array(BNode* root_node)
 {
-        accumulate_functor<BNode*> af;
-        apply_on_pair_nodes(root_node, af);
-        return af.elements;
+    accumulate_functor<BNode*> af;
+    apply_on_pair_nodes(root_node, af);
+    return af.elements;
 }
 
 std::vector<BNode*>
@@ -318,8 +304,8 @@ print_snail_number(BNode* root_node)
 BNode*
 find_pair_nested_4(BNode* root_node)
 {
-    // Find and return the first node in a tree with nest level 4.
-    // Otherwise return nullptr
+    // Find and return the leftmost node in a tree with nest level 4.
+    // If no such node is present return nullptr
     auto tree_pairs_array = make_tree_pairs_as_array(root_node);
     for (auto node: tree_pairs_array) {
         if (nest_level(node) == 4) {
@@ -328,21 +314,6 @@ find_pair_nested_4(BNode* root_node)
     }
 
     return nullptr;
-}
-
-struct
-nestlevel_print_functor
-{
-    void operator() (BNode* e) {
-        std::cout << e->value << "(" << nest_level(e) << ") ";
-    }
-};
-
-void
-print_tree_and_levels(BNode* node)
-{
-    nestlevel_print_functor nlpf;
-    preorder_traverse(node, nlpf);
 }
 
 bool
@@ -355,9 +326,6 @@ explode_once(BNode* root_node)
         return false;
     }
 
-    std::cout << std::endl << "Explode ["
-            << x_node->left_child->value << ","
-            << x_node->right_child->value << "]" << std::endl; 
     // found a node to explode
     auto leaf_array = make_tree_leaves_array(root_node);
 
@@ -373,11 +341,7 @@ explode_once(BNode* root_node)
         right_from_xnode->value += x_node->right_child->value;
     }
 
-    // Replace exploding pair with 0
-    // TODO: make a function for this
-    x_node->left_child = nullptr; //Memory leak! Needa clear fct.
-    x_node->right_child = nullptr;
-    x_node->value = 0;
+    replace_node_with_value(x_node, 0);
 
     return true;
 }
@@ -386,18 +350,13 @@ bool
 split_once(BNode* root_node)
 {
     auto leaf_array = make_tree_leaves_array(root_node);
-    // Search for a leaf node with value >= 10
+
     for (auto leaf_node: leaf_array) {
         if (leaf_node->value >= 10) {
-            std::cout << std::endl << "Splitting node "
-            << leaf_node->value << std::endl;
-            // replace with ...
-            //leaf_node->value = -1;
-            leaf_node->left_child = new BNode(leaf_node);
-            leaf_node->left_child->value = floor(leaf_node->value / 2.0);
-            leaf_node->right_child = new BNode(leaf_node);
-            leaf_node->right_child->value = ceil(leaf_node->value / 2.0);
-            leaf_node->value = -1;
+            replace_node_with_pair(
+                leaf_node,
+                floor(leaf_node->value / 2.0),
+                ceil(leaf_node->value / 2.0));
             return true;
         }
     }
@@ -407,38 +366,14 @@ split_once(BNode* root_node)
 void
 reduce_snail_number(BNode* root_node)
 {
-    
     if(explode_once(root_node)) {
-        std::cout << std::endl << "After explosion:" << std::endl;
-        print_snail_number(root_node);
         reduce_snail_number(root_node);
         return;
     }
     else if (split_once(root_node)) {
-        std::cout << std::endl << "After split:" << std::endl;
-        print_snail_number(root_node);
         reduce_snail_number(root_node);
         return;
     }
-    
-
-    /*
-    while (true) {
-        if (explode_once(root_node)) {
-            std::cout << std::endl << "After explosion:" << std::endl;
-            print_snail_number(root_node);
-            continue;
-        }
-        else if (split_once(root_node)) {
-            std::cout << std::endl << "After split:" << std::endl;
-            print_snail_number(root_node);
-            continue;
-        }
-        else {
-            return;
-        }
-    }
-    */
 }
 
 BNode*
@@ -455,22 +390,6 @@ add_snail_numbers(BNode* left, BNode* right)
     result->right_child->parent = result;
 
     reduce_snail_number(result);
-
-    return result;
-}
-
-BNode*
-add_snail_numbers_without_reduce(BNode* left, BNode* right)
-{
-    BNode* left_copy = new BNode();
-    copy_tree(left, left_copy);
-    BNode* right_copy = new BNode();
-    copy_tree(right, right_copy);
-    BNode* result = new BNode();
-    result->left_child = left_copy;
-    result->left_child->parent = result;
-    result->right_child = right_copy;
-    result->right_child->parent = result;
 
     return result;
 }
@@ -506,12 +425,6 @@ day18()
     print_snail_number(b);
     std::cout << std::endl;
 
-    // Print onyle the leaves of the number
-    std::cout << "Leaves:" << std::endl;
-    auto x = make_snail_number("[[[[1,3],[5,3]],[[1,3],[8,7]]],[[[4,9],[6,9]],[[8,2],[7,3]]]]");
-    print_leaves(x);
-    std::cout << std::endl;
-
     // Copy a number to prevent the changes in one to affect changes in other
     auto c = new BNode();
     copy_tree(b, c);
@@ -526,16 +439,10 @@ day18()
     print_snail_number(n3);
     std::cout << std::endl;
 
-    // Calculate the nesting level of a node
-    std::cout << "Nodes and nesting levels:" << std::endl;
-    print_tree_and_levels(n3);
-    std::cout << std::endl;
-
     // Find pair with nest level 4 for exploding
     std::cout << "Next" << std::endl;
     auto nl4 = make_snail_number("[[[[[9,8],1],2],3],4]");
     auto nl5 = make_snail_number("[7,[6,[5,[4,[3,2]]]]]");
-    print_tree_and_levels(nl5);
     
     auto node_4 = find_pair_nested_4(nl5);
     if (node_4 != nullptr) {
@@ -650,18 +557,12 @@ day18()
 
     // Init
     auto num = make_snail_number(lines[0]);
-    print_snail_number(num);
-    std::cout << std::endl;
     for (int i=1; i<lines.size(); i++) {
         num = add_snail_numbers(
-            num,
-            make_snail_number(lines[i]));
-        print_snail_number(num);
-        std::cout << std::endl;
+                num,
+                make_snail_number(lines[i]));
+        
     }
-    std::cout << std::endl << "Result after all additions" <<
-    std::endl;
-    print_snail_number(num);
 
     // Part 1
     part_1_solution = magnitude_of_snail_number(num);
