@@ -15,3 +15,9 @@ $ make
 $ cd ..
 $ ./aoc2021
 ```
+## Run the 2022 Rust solutions
+The 2022 AoC solutions are written in Rust in Linux. They can be run by cding into the 2022 directory and running cargo:
+```
+$ cd 2022
+$ cargo run
+```
