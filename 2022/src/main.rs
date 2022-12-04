@@ -1,5 +1,3 @@
-//use std::fs;
-
 use std::{
     fs::File,
     io::{prelude::*, BufReader},
@@ -15,16 +13,7 @@ fn lines_from_file(filename: impl AsRef<Path>) -> Vec<String> {
         .collect()
 }
 
-fn main() {
-    println!("Advent of code 2022 solutions:");
-
-
-    println!("Day 01:");
-    
-    //let data = fs::read_to_string("./input/example_01.txt").expect("Unable to read file");
-    //println!("{}", data);
-
-    let lines = lines_from_file("./input/day_01.txt");
+fn day_01_1(lines: Vec<String>) -> u32 {
     let mut max = 0;
     let mut current = 0;
     for line in lines {
@@ -43,6 +32,18 @@ fn main() {
             current += input;
         }
     }
+    return max;
+}
 
-    println!("{}", max);
+fn main() {
+    println!("Advent of code 2022 solutions:");
+
+
+    
+    let lines = lines_from_file("./input/day_01.txt");
+
+    println!("Day 01:");
+    println!("{}", day_01_1(lines));
+
+    
 }
