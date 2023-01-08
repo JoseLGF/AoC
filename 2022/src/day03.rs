@@ -1,4 +1,7 @@
 use crate::helpers;
+use std::collections::HashSet;
+use std::iter::FromIterator;
+
 
 use substring::Substring;
 
@@ -59,6 +62,23 @@ fn part_1(lines: &Vec<String>) -> u32 {
     return sum_of_priorities;
 }
 
+fn find_common (a: String, b: String) {
+    let it_a = a.bytes().iter();
+}
+
+fn find_badge(group: Vec<String>) -> char {
+    let numbers_iterator = numbers.iter();
+}
+
 fn part_2(lines: &Vec<String>) -> u32 {
+    
+    let groups: Vec<Vec<String>> = lines.chunks(3).map(|s| s.into()).collect();
+
+    let badges: Vec<char>;
+
+    for group in groups {
+        badges.push(find_badge(group));
+    }
+    
     return 0;
 }
