@@ -4,8 +4,9 @@ project(AOC2022)
 
 add_executable(${PROJECT_NAME}
     src/main.cpp
+    src/common.cpp
     src/day01.cpp
-    # src/day02.cpp
+    src/day02.cpp
     # src/day03.cpp
     # src/day04.cpp
     # src/day05.cpp

@@ -24,7 +24,7 @@ int main(int argc, char* argv[]){
 
 #ifndef TESTING
     path = path_prefix + "/day01.txt"; day01(path);
-    // path = path_prefix + "/day02.txt"; day02(path);
+    path = path_prefix + "/day02.txt"; day02(path);
     // path = path_prefix + "/day03.txt"; day03(path);
     // path = path_prefix + "/day04.txt"; day04(path);
     // path = path_prefix + "/day05.txt"; day05(path);

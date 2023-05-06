@@ -5,6 +5,8 @@
 #include <iostream>
 #include <algorithm>
 
+#include "common.h"
+
 int day01_1(std::vector<std::string>& lines) {
     int max = 0;
     int current = 0;
@@ -50,13 +52,8 @@ int day01_2(std::vector<std::string>& lines) {
 void day01(std::string& input_path) {
     std::cout << "Day 1:" << std::endl;
 
-    std::ifstream infile(input_path);
-    std::vector<std::string> lines;
-    std::string line;
-    while (std::getline(infile, line))
-    {
-        lines.push_back(line);
-    }
+    std::vector<std::string> lines =
+    get_input(input_path);
 
     std::cout << day01_1(lines) << std::endl;
     std::cout << day01_2(lines) << std::endl;
