@@ -53,5 +53,5 @@ int main(int argc, char* argv[]){
     path = path_prefix + "/day16.txt"; day16(path);
     path = path_prefix + "/day17.txt"; day17(path);
 #endif
-    path = "input/day18.txt"; day18(path);
+    path = path_prefix + "/day18.txt"; day18(path);
 }
