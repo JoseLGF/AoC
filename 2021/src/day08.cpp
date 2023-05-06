@@ -99,9 +99,9 @@ int find_output_value(LogLine line)
     return output;
 }
 
-void day08()
+void day08(std::string& input_path)
 {
-    std::ifstream infile("input/day08.txt");
+    std::ifstream infile(input_path);
 
     // Parse data
     std::string line;

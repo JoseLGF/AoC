@@ -135,7 +135,7 @@ struct World
 
 };
 
-void day17()
+void day17(std::string& input_path)
 {
     int part_1_solution = -1;
     int part_2_solution = -1;

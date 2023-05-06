@@ -2,8 +2,8 @@
 #include <vector>
 #include <iostream>
 
-int day02_1() {
-    std::ifstream infile("input/day02.txt");
+int day02_1(std::string& input_path) {
+    std::ifstream infile(input_path);
     std::string command;
     int parameter;
 
@@ -29,8 +29,8 @@ int day02_1() {
     return depth * distance;
 }
 
-int day02_2() {
-    std::ifstream infile("input/day02.txt");
+int day02_2(std::string& input_path) {
+    std::ifstream infile(input_path);
     std::string command;
     int parameter;
 
@@ -58,9 +58,9 @@ int day02_2() {
     return depth * distance;
 }
 
-void day02()
+void day02(std::string& input_path)
 {
     std::cout << "Day 2:" << std::endl;
-    std::cout << day02_1() << std::endl;
-    std::cout << day02_2() << std::endl;
+    std::cout << day02_1(input_path) << std::endl;
+    std::cout << day02_2(input_path) << std::endl;
 }

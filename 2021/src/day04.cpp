@@ -120,9 +120,9 @@ std::vector<int> get_random_order(std::string str_order)
     return vect;
 }
 
-void day04()
+void day04(std::string& input_path)
 {
-    std::ifstream infile("input/day04.txt");
+    std::ifstream infile(input_path);
 
     // Get the random order
     std::string str_order;

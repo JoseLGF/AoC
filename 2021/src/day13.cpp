@@ -195,11 +195,11 @@ class Problem
 
 };
 
-void day13()
+void day13(std::string& input_path)
 {
     int part_1_solution = -1;
     int part_2_solution = -1;
-    std::ifstream infile("input/day13.txt");
+    std::ifstream infile(input_path);
 
     // Parse data
     std::string line;

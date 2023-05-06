@@ -39,9 +39,9 @@ char least_common_bit_at_position(const std::vector<std::string>& values, int po
     return '1';
 }
 
-int day03_1()
+int day03_1(std::string& input_path)
 {
-    std::ifstream infile("input/day03.txt");
+    std::ifstream infile(input_path);
     std::vector<std::string> codes;
     std::string str;
     while (getline(infile, str)) {
@@ -111,9 +111,9 @@ unsigned int get_co2_scrubber_rating(std::vector<std::string> values, int numBit
     return co;
 }
 
-int day03_2()
+int day03_2(std::string& input_path)
 {
-    std::ifstream infile("input/day03.txt");
+    std::ifstream infile(input_path);
     std::vector<std::string> codes;
     std::string str;
     while (getline(infile, str)) {
@@ -127,9 +127,9 @@ int day03_2()
     return life_support_rating;
 }
 
-void day03()
+void day03(std::string& input_path)
 {
     std::cout << "Day 3:" << std::endl;
-    std::cout << day03_1() << std::endl;
-    std::cout << day03_2() << std::endl;
+    std::cout << day03_1(input_path) << std::endl;
+    std::cout << day03_2(input_path) << std::endl;
 }

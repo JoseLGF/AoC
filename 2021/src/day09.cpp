@@ -63,11 +63,11 @@ int calculate_basin_size(const std::vector<std::string>& map, Point location)
     return size;
 }
 
-void day09()
+void day09(std::string& input_path)
 {
     int part_1_solution = -1;
     int part_2_solution = -1;
-    std::ifstream infile("input/day09.txt");
+    std::ifstream infile(input_path);
 
     // Low points are calculated in part 1, and required for part 2
     std::vector<Point> low_points;

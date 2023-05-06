@@ -69,9 +69,9 @@ std::vector<unsigned int> simulate_fish(std::vector<unsigned int> state)
     return out;
 }
 
-void day06()
+void day06(std::string& input_path)
 {
-    std::ifstream infile("input/day06.txt");
+    std::ifstream infile(input_path);
 
     int num_days = 80;
 

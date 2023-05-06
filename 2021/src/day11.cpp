@@ -145,11 +145,11 @@ public:
 
 };
 
-void day11()
+void day11(std::string& input_path)
 {
     int part_1_solution = -1;
     int part_2_solution = -1;
-    std::ifstream infile("input/day11.txt");
+    std::ifstream infile(input_path);
 
     // Parse data
     std::string line;

@@ -30,9 +30,9 @@ int updated_total_cost(std::vector<int> crab_positions, int position)
     return sum;
 }
 
-void day07()
+void day07(std::string& input_path)
 {
-    std::ifstream infile("input/day07.txt");
+    std::ifstream infile(input_path);
 
     std::vector<int> crab_positions;
     int crab;

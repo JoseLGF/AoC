@@ -542,11 +542,11 @@ day18()
 #pragma region DAY 18 CODE
 #ifndef TESTING
 void
-day18()
+day18(std::string& input_path)
 {
     int part_1_solution = -1;
     int part_2_solution = -1;
-    std::ifstream infile("input/day18.txt");
+    std::ifstream infile(input_path);
 
     // Parse data
     std::string line;

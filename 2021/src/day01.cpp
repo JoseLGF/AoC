@@ -2,8 +2,8 @@
 #include <vector>
 #include <iostream>
 
-int day01_1() {
-    std::ifstream infile("input/day01.txt");
+int day01_1(std::string& input_path) {
+    std::ifstream infile(input_path);
     std::vector<int> measurements;
     int measurement;
     while(infile >> measurement) measurements.push_back(measurement);
@@ -17,8 +17,8 @@ int day01_1() {
     return increasing_measurements;
 }
 
-int day01_2() {
-    std::ifstream infile("input/day01.txt");
+int day01_2(std::string& input_path) {
+    std::ifstream infile(input_path);
     std::vector<int> measurements;
     int measurement;
     while(infile >> measurement) measurements.push_back(measurement);
@@ -37,8 +37,8 @@ int day01_2() {
 
 }
 
-void day01() {
+void day01(std::string& input_path) {
     std::cout << "Day 1:" << std::endl;
-    std::cout << day01_1() << std::endl;
-    std::cout << day01_2() << std::endl;
+    std::cout << day01_1(input_path) << std::endl;
+    std::cout << day01_2(input_path) << std::endl;
 }

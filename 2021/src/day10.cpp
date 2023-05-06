@@ -124,11 +124,11 @@ unsigned long get_autocomplete_score(std::string completing_chars)
     return score;
 }
 
-void day10()
+void day10(std::string& input_path)
 {
     int part_1_solution = -1;
     unsigned long part_2_solution = -1;
-    std::ifstream infile("input/day10.txt");
+    std::ifstream infile(input_path);
 
     // Parse data
     std::string line;

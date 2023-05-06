@@ -333,11 +333,11 @@ class Packet
     }
 };
 
-void day16()
+void day16(std::string& input_path)
 {
     int part_1_solution = -1;
     uint64_t part_2_solution = -1;
-    std::ifstream infile("input/day16.txt");
+    std::ifstream infile(input_path);
 
     // Parse data
     std::string line;

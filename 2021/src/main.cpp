@@ -1,47 +1,57 @@
 #include <iostream>
+#include <fstream>
+#include <string>
 
-#define TESTING
+// #define TESTING
+void day01(std::string& input_path);
+void day02(std::string& input_path);
+void day03(std::string& input_path);
+void day04(std::string& input_path);
+void day05(std::string& input_path);
+void day06(std::string& input_path);
+void day07(std::string& input_path);
+void day08(std::string& input_path);
+void day09(std::string& input_path);
+void day10(std::string& input_path);
+void day11(std::string& input_path);
+void day12(std::string& input_path);
+void day13(std::string& input_path);
+void day14(std::string& input_path);
+void day15(std::string& input_path);
+void day16(std::string& input_path);
+void day17(std::string& input_path);
+void day18(std::string& input_path);
 
-void day01();
-void day02();
-void day03();
-void day04();
-void day05();
-void day06();
-void day07();
-void day08();
-void day09();
-void day10();
-void day11();
-void day12();
-void day13();
-void day14();
-void day15();
-void day16();
-void day17();
-void day18();
+int main(int argc, char* argv[]){
 
-int main(){
+    if (2 != argc) {
+        std::cout << "Please specify the path to input files." << std::endl;
+        return 0;
+    }
+
+    std::string path_prefix(argv[1]);
+    std::string path;
+
     std::cout << "Advent of Code 2021 solutions:" << std::endl;
 
 #ifndef TESTING
-    day01();
-    day02();
-    day03();
-    day04();
-    day05();
-    day06();
-    day07();
-    day08();
-    day09();
-    day10();
-    day11();
-    day12();
-    day13();
-    day14();
-    day15();
-    day16();
-    day17();
+    path = path_prefix + "/day01.txt"; day01(path);
+    path = path_prefix + "/day02.txt"; day02(path);
+    path = path_prefix + "/day03.txt"; day03(path);
+    path = path_prefix + "/day04.txt"; day04(path);
+    path = path_prefix + "/day05.txt"; day05(path);
+    path = path_prefix + "/day06.txt"; day06(path);
+    path = path_prefix + "/day07.txt"; day07(path);
+    path = path_prefix + "/day08.txt"; day08(path);
+    path = path_prefix + "/day09.txt"; day09(path);
+    path = path_prefix + "/day10.txt"; day10(path);
+    path = path_prefix + "/day11.txt"; day11(path);
+    path = path_prefix + "/day12.txt"; day12(path);
+    path = path_prefix + "/day13.txt"; day13(path);
+    path = path_prefix + "/day14.txt"; day14(path);
+    path = path_prefix + "/day15.txt"; day15(path);
+    path = path_prefix + "/day16.txt"; day16(path);
+    path = path_prefix + "/day17.txt"; day17(path);
 #endif
-    day18();
+    path = "input/day18.txt"; day18(path);
 }

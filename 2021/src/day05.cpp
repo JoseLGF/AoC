@@ -219,9 +219,9 @@ int day05_2(const std::vector<LineSegment>& lines)
     return duplicate_points.size();
 }
 
-void day05()
+void day05(std::string& input_path)
 {
-    std::ifstream infile("input/day05.txt");
+    std::ifstream infile(input_path);
 
     // Get all line segments
     std::vector<LineSegment> lines {};
