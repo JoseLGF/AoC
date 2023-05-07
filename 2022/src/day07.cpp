@@ -115,13 +115,13 @@ public:
             m_current_dir = m_root;
         } else if (dir_name == "..") {
             m_current_dir = m_current_dir->m_parent;
-            std::cout << "cd'ing into " << m_current_dir->m_name << std::endl;
+            // std::cout << "cd'ing into " << m_current_dir->m_name << std::endl;
         }
         else {
             Directory* ptr = m_current_dir->FindChildByName(dir_name);
             if (nullptr != ptr) {
                 m_current_dir = ptr;
-                std::cout << "Found. Cd'ing into " << m_current_dir->m_name << std::endl;
+                // std::cout << "Found. Cd'ing into " << m_current_dir->m_name << std::endl;
             }
         }
     }
@@ -141,7 +141,7 @@ public:
             Directory* new_dir = new Directory(name, m_current_dir, m_current_dir->m_level+1);
             managed_dirs.push_back(new_dir);
             m_current_dir->AddSubdirectory(new_dir);
-            std::cout << "Register " << m_current_dir->m_name << "->" << name << std::endl;
+            // std::cout << "Register " << m_current_dir->m_name << "->" << name << std::endl;
         }
         else {
             int size = stoi(tokens[0]);
@@ -156,15 +156,24 @@ public:
 
     void size_report() {
         int sum_atmost_100000 = 0;
-        std::cout << "Size report" << std::endl;
+        // std::cout << "Size report" << std::endl;
         m_root->calculate_size();
         for(auto md: managed_dirs) {
             if (md->m_size <= 100000) {
                 sum_atmost_100000 += md->m_size;
             }
-            std::cout << md->m_name << ": " << md->m_size << std::endl;
+            // std::cout << md->m_name << ": " << md->m_size << std::endl;
         }
-        std::cout << "Part 1 " << sum_atmost_100000 << std::endl;
+        // Part 1 solution
+        std::cout << sum_atmost_100000 << std::endl;
+    }
+
+    std::vector<int> dirs_sizes() {
+        std::vector<int> out;
+        for (auto md: managed_dirs) {
+            out.push_back(md->m_size);
+        }
+        return out;
     }
 };
 
@@ -185,6 +194,25 @@ void day07(std::string& input_path) {
         }
     }
 
-    fs.print();
+    // fs.print();
     fs.size_report();
+
+    // Part 2
+    auto fs_sizes = fs.dirs_sizes();
+
+    int total_disk_space = 70000000;
+    int update_size = 30000000;
+    int root_size = fs_sizes[0];
+    int unused_space = total_disk_space - root_size;
+    int min_dir_delete_size = update_size - unused_space;
+
+    std::vector<int> candidates;
+    for (int i=1; i<fs_sizes.size(); i++) {
+        if (fs_sizes[i] >= min_dir_delete_size) {
+            candidates.push_back(fs_sizes[i]);
+        }
+    }
+
+    std::sort(candidates.begin(), candidates.end());
+    std::cout << candidates[0] << std::endl;
 }
