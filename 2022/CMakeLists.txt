@@ -11,6 +11,7 @@ add_executable(${PROJECT_NAME}
     # src/day04.cpp
     # src/day05.cpp
     # src/day06.cpp
+    src/day07.cpp
 )
 
 set_property(TARGET ${PROJECT_NAME}

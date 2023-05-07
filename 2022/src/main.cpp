@@ -9,6 +9,7 @@ void day03(std::string& input_path);
 void day04(std::string& input_path);
 void day05(std::string& input_path);
 void day06(std::string& input_path);
+void day07(std::string& input_path);
 
 int main(int argc, char* argv[]){
 
@@ -29,6 +30,7 @@ int main(int argc, char* argv[]){
     // path = path_prefix + "/day04.txt"; day04(path);
     // path = path_prefix + "/day05.txt"; day05(path);
     // path = path_prefix + "/day06.txt"; day06(path);
+    path = path_prefix + "/day07.txt"; day07(path);
 #endif
     
 }
