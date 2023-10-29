@@ -10,6 +10,7 @@ void day04(std::string& input_path);
 void day05(std::string& input_path);
 void day06(std::string& input_path);
 void day07(std::string& input_path);
+void day08(std::string& input_path);
 
 int main(int argc, char* argv[]){
 
@@ -24,13 +25,11 @@ int main(int argc, char* argv[]){
     std::cout << "Advent of Code 2022 solutions:" << std::endl;
 
 #ifndef TESTING
-    path = path_prefix + "/day01.txt"; day01(path);
-    path = path_prefix + "/day02.txt"; day02(path);
-    // path = path_prefix + "/day03.txt"; day03(path);
-    // path = path_prefix + "/day04.txt"; day04(path);
-    // path = path_prefix + "/day05.txt"; day05(path);
-    // path = path_prefix + "/day06.txt"; day06(path);
-    path = path_prefix + "/day07.txt"; day07(path);
+    path = path_prefix + "/1.txt"; day01(path);
+    path = path_prefix + "/2.txt"; day02(path);
+    //path = path_prefix + "/3.txt"; day03(path);
+    path = path_prefix + "/7.txt"; day07(path);
+    path = path_prefix + "/8.txt"; day08(path);
 #endif
-    
+
 }
