@@ -149,11 +149,11 @@ void day08(std::string& input_path) {
             if (tree.is_visible) {
                 visible_count++;
             }
-            cout << tree.height << "[" << tree.scenic_score << "]" << " ";
+            // cout << tree.height << "[" << tree.scenic_score << "]" << " ";
         }
-        cout << endl;
+        // cout << endl;
     }
-    cout << "Visible: " << visible_count << endl;
-    cout << "Score: " << max_scenic_score << endl;
+    cout <<  visible_count << endl;
+    cout <<  max_scenic_score << endl;
 
 }
